@@ -17,9 +17,9 @@ class INGAPI:
         host,
         endpoint,
         client_id,
-        sign_key="certs/example_client_signing.key",
-        tls_cert="certs/example_client_tls.cer",
-        tls_key="certs/example_client_tls.key",
+        sign_key="certs/ing/example_client_signing.key",
+        tls_cert="certs/ing/example_client_tls.cer",
+        tls_key="certs/ing/example_client_tls.key",
     ):
 
         self.host = host
