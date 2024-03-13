@@ -15,7 +15,6 @@ class INGAPI:
     def __init__(
         self,
         host,
-        endpoint,
         client_id,
         sign_key="certs/ing/example_client_signing.key",
         tls_cert="certs/ing/example_client_tls.cer",
@@ -27,7 +26,6 @@ class INGAPI:
         self.sign_key = sign_key
         self.tls_cert = tls_cert
         self.tls_key = tls_key
-        self.endpoint = endpoint
 
         # Set an empty token until it's requested
         self.token = None
@@ -110,11 +108,4 @@ class INGAPI:
         result.raise_for_status()
         return result
 
-    def get_token(self):
-        """ Update self.token """
-
-        res = self.query(
-            endpoint=self.endpoint, method="POST", body="grant_type=client_credentials",
-        )
-        self.token = res.json()["access_token"]
 
