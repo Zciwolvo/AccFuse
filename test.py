@@ -81,47 +81,29 @@ print(transactions_url)
 
 gen_bal = INGAPI.INGAPI(host="https://api.sandbox.ing.com", client_id="5ca1ab1e-c0ca-c01a-cafe-154deadbea75")
 
-current_accId = open("accId.txt", "w")
 #test accId = 450ffbb8-9f11-4ec6-a1e1-df48aefc82ef (Belgium)
+#test accId = 181fdfd4-5838-4768-b803-91ae2192f902 (Romania)
+#              
+bal_response = ctoken_gen.query(
+    method="get",
+    body=payload,
+    token=response_ctoken_data,
+    endpoint=f"/v3/accounts/{acc_id}/balances?currency=EUR"
+)
 
-try:
-    accId = current_accId.read()
-    bal_response = ctoken_gen.query(
-        method="get",
-        body=payload,
-        token=response_ctoken_data,
-        endpoint=f"/v3/accounts/450ffbb8-9f11-4ec6-a1e1-df48aefc82ef/balances"
-    )
-except:
-    current_accId.write(acc_id)
-    bal_response = ctoken_gen.query(
-        method="get",
-        body=payload,
-        token=response_ctoken_data,
-        endpoint=f"/v3/accounts/{acc_id}/balances"
-    )
 
 bal_data = json.loads(bal_response.text)
 
+print(bal_data)
 
 gen_trans = INGAPI.INGAPI(host="https://api.sandbox.ing.com", client_id="5ca1ab1e-c0ca-c01a-cafe-154deadbea75")
 
-try:
-    accId = current_accId.read()
-    trans_response = ctoken_gen.query(
-        method="get",
-        body=payload,
-        token=response_ctoken_data,
-        endpoint=f"/v3/accounts/450ffbb8-9f11-4ec6-a1e1-df48aefc82ef/transactions"
-    )
-except:
-    current_accId.write(acc_id)
-    trans_response = ctoken_gen.query(
-        method="get",
-        body=payload,
-        token=response_ctoken_data,
-        endpoint=f"/v3/accounts/{acc_id}/transactions"
-    )
+trans_response = ctoken_gen.query(
+    method="get",
+    body=payload,
+    token=response_ctoken_data,
+    endpoint=f"/v3/accounts/{acc_id}/transactions?currency=EUR"
+)
 
 trans_data = json.loads(trans_response.text)
 print(trans_data)
