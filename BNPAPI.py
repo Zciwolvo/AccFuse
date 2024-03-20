@@ -2,7 +2,7 @@ import requests
 import json
 
 
-app_id = "faadd989-102d-4ba1-b9fd-c01d45c75849&brand=bnppf"
+app_id = "faadd989-102d-4ba1-b9fd-c01d45c75849"
 
 url = f'https://sandbox.auth.bnpparibasfortis.com/authenticate?client_id={app_id}&brand=bnppf'
 payload = {
@@ -23,6 +23,11 @@ access_token = json.loads(response.text)['data']['access_token']
 
 
 url = f'https://sandbox.auth.bnpparibasfortis.com/authorize?client_id={app_id}&state=api&brand=bnppf'
+headers = {
+    'Authorization': f'Bearer {access_token}',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+}
 payload = {
     "redirect_uri": "http://127.0.0.1:5000/get_code",
     "scope": "aisp",
@@ -30,13 +35,6 @@ payload = {
     "accounts": "BE15054777401700"
 }
 
-headers = {
-    "Authorization": f"Bearer {access_token}"
-}
-
-# Make the POST request
 response = requests.post(url, json=payload, headers=headers)
 
-
-# Check the response
 print(response.text)
