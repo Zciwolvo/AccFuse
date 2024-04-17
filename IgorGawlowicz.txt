@@ -1,0 +1,7 @@
+Temat pracy:
+
+"Platforma integrująca dane z wielu kont bankowych w celu efektywnego generowania raportów finansowych"
+
+Promotor:
+
+dr inż. Krzysztof Augustynek

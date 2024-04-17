@@ -40,7 +40,9 @@ response_url_data = json.loads(response_url.text)['location']
 
 account_id = response_url_data[43:79]
 
-response_url_data += r"/NL?&client_id=5ca1ab1e-c0ca-c01a-cafe-154deadbea75&state=ANY_ARBITRARY_VALUE&scope=payment-accounts%3Abalances%3Aview+payment-accounts%3Atransactions%3Aview&redirect_uri=http://127.0.0.1:5000/get_code&response_type=code"
+response_url_data += r"/?&client_id=5ca1ab1e-c0ca-c01a-cafe-154deadbea75&state=ANY_ARBITRARY_VALUE&scope=payment-accounts%3Abalances%3Aview+payment-accounts%3Atransactions%3Aview&redirect_uri=http://127.0.0.1:5000/get_code&response_type=code"
+
+print(response_url_data)
 
 
 webbrowser.open_new(response_url_data)
@@ -78,23 +80,24 @@ balance_url = acc_data['accounts'][0]['_links']['balances']['href']
 transactions_url = acc_data['accounts'][0]['_links']['transactions']['href']
 print(balance_url)
 print(transactions_url)
+print(acc_data)
 
 gen_bal = INGAPI.INGAPI(host="https://api.sandbox.ing.com", client_id="5ca1ab1e-c0ca-c01a-cafe-154deadbea75")
 
 #test accId = 450ffbb8-9f11-4ec6-a1e1-df48aefc82ef (Belgium)
 #test accId = 181fdfd4-5838-4768-b803-91ae2192f902 (Romania)
-#              
+#             37608c1d-4d6a-40a2-850c-2462f2e26e80 (Romania)
 bal_response = ctoken_gen.query(
     method="get",
     body=payload,
     token=response_ctoken_data,
-    endpoint=f"/v3/accounts/{acc_id}/balances?currency=EUR"
+    endpoint=f"/v3/accounts/{acc_id}/balances"
 )
 
 
 bal_data = json.loads(bal_response.text)
 
-print(bal_data)
+#print(bal_data)
 
 gen_trans = INGAPI.INGAPI(host="https://api.sandbox.ing.com", client_id="5ca1ab1e-c0ca-c01a-cafe-154deadbea75")
 
@@ -102,8 +105,10 @@ trans_response = ctoken_gen.query(
     method="get",
     body=payload,
     token=response_ctoken_data,
-    endpoint=f"/v3/accounts/{acc_id}/transactions?currency=EUR"
+    endpoint=f"/v3/accounts/{acc_id}/transactions"
 )
 
 trans_data = json.loads(trans_response.text)
-print(trans_data)
+#print(trans_data)
+
+#ING reference code for reported issue: 1713095655241
