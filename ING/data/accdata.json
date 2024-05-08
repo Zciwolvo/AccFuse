@@ -1,0 +1,52 @@
+{
+  "accounts": [
+    {
+      "resourceId": "450ffbb8-9f11-4ec6-a1e1-df48aefc82ef",
+      "iban": "NL69INGB0123456789",
+      "maskedPan": "",
+      "name": "Hr A van Dijk , Mw B Mol-van Dijk",
+      "currency": "EUR",
+      "product": "Betaalrekening",
+      "_links": {
+        "balances": {
+          "href": "/v3/accounts/450ffbb8-9f11-4ec6-a1e1-df48aefc82ef/balances?currency=EUR"
+        },
+        "transactions": {
+          "href": "/v3/accounts/450ffbb8-9f11-4ec6-a1e1-df48aefc82ef/transactions?currency=EUR"
+        }
+      }
+    },
+    {
+      "resourceId": "181fdfd4-5838-4768-b803-91ae2192f901",
+      "iban": "NL35INGB0123854616",
+      "maskedPan": "",
+      "name": "Mw B Mol",
+      "currency": "EUR",
+      "product": "Betaalrekening",
+      "_links": {
+        "balances": {
+          "href": "/v3/accounts/181fdfd4-5838-4768-b803-91ae2192f901/balances?currency=EUR"
+        },
+        "transactions": {
+          "href": "/v3/accounts/181fdfd4-5838-4768-b803-91ae2192f901/transactions?currency=EUR"
+        }
+      }
+    },
+    {
+      "resourceId": "34dea1a9-0543-4711-b105-3492d1bbc8f6",
+      "iban": "",
+      "maskedPan": "5248 **** **** 1234",
+      "name": "Hr E van Dijk",
+      "currency": "EUR",
+      "product": "CREDITCARD",
+      "_links": {
+        "balances": {
+          "href": "/v3/accounts/34dea1a9-0543-4711-b105-3492d1bbc8f6/balances?currency=EUR"
+        },
+        "transactions": {
+          "href": "/v1/card-accounts/34dea1a9-0543-4711-b105-3492d1bbc8f6/transactions?currency=EUR"
+        }
+      }
+    }
+  ]
+}

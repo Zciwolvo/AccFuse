@@ -1,0 +1,56 @@
+{
+  "_links": {
+    "self": {
+      "href": "/psd2/v3/accounts?brand=bnppf&pageSize=25&index=1",
+      "templated": false
+    }
+  },
+  "accounts": [
+    {
+      "resourceId": "BE37922344684719EUR",
+      "bicFi": "GEBABBEB",
+      "name": "Max Born - BNPPF",
+      "usage": "PRIV",
+      "cashAccountType": "CACC",
+      "product": "CUR - BNPPF",
+      "currency": "EUR",
+      "accountId": {
+        "iban": "BE37922344684719"
+      },
+      "psuStatus": "Holder",
+      "_links": {
+        "balances": {
+          "href": "/psd2/v3/accounts/BE37922344684719EUR/balances",
+          "templated": false
+        },
+        "transactions": {
+          "href": "/psd2/v3/accounts/BE37922344684719EUR/transactions",
+          "templated": false
+        }
+      }
+    },
+    {
+      "resourceId": "BE62505480160914EUR",
+      "bicFi": "GEBABBEB",
+      "name": "Max Born - HB",
+      "usage": "PRIV",
+      "cashAccountType": "CACC",
+      "product": "CUR - HB",
+      "currency": "EUR",
+      "accountId": {
+        "iban": "BE62505480160914"
+      },
+      "psuStatus": "Holder",
+      "_links": {
+        "balances": {
+          "href": "/psd2/v3/accounts/BE62505480160914EUR/balances",
+          "templated": false
+        },
+        "transactions": {
+          "href": "/psd2/v3/accounts/BE62505480160914EUR/transactions",
+          "templated": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "_links": {
+      "self": {
+        "href": "/psd2/v3/accounts/BE37922344684719EUR/balances?brand=bnppf",
+        "templated": false
+      },
+      "parent-list": {
+        "href": "/psd2/v3/accounts?brand=bnppf",
+        "templated": false
+      },
+      "transactions": {
+        "href": "/psd2/v3/accounts/BE37922344684719EUR/transactions?brand=bnppf",
+        "templated": false
+      }
+    },
+    "balances": [
+      {
+        "name": "Closing balance",
+        "balanceType": "CLBD",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": {
+          "currency": "EUR",
+          "amount": "100.00"
+        }
+      },
+      {
+        "name": "Operational Balance",
+        "balanceType": "OTHR",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": {
+          "currency": "EUR",
+          "amount": "100.00"
+        }
+      },
+      {
+        "name": "Available balance",
+        "balanceType": "ITAV",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": {
+          "currency": "EUR",
+          "amount": "100.00"
+        }
+      }
+    ]
+  },
+  {
+    "_links": {
+      "self": {
+        "href": "/psd2/v3/accounts/BE62505480160914EUR/balances?brand=bnppf",
+        "templated": false
+      },
+      "parent-list": {
+        "href": "/psd2/v3/accounts?brand=hb",
+        "templated": false
+      },
+      "transactions": {
+        "href": "/psd2/v3/accounts/BE62505480160914EUR/transactions?brand=hb",
+        "templated": false
+      }
+    },
+    "balances": [
+      {
+        "name": "Closing balance",
+        "balanceType": "CLBD",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": {
+          "currency": "EUR",
+          "amount": "100.00"
+        }
+      },
+      {
+        "name": "Operational Balance",
+        "balanceType": "OTHR",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": {
+          "currency": "EUR",
+          "amount": "100.00"
+        }
+      },
+      {
+        "name": "Available balance",
+        "balanceType": "ITAV",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": {
+          "currency": "EUR",
+          "amount": "100.00"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "account": {
+    "iban": "NL69INGB0123456789",
+    "currency": "EUR"
+  },
+  "transactions": {
+    "booked": [
+      {
+        "transactionId": "021614321078455845000000001",
+        "endToEndId": "NOTPROVIDED",
+        "bookingDate": "2023-03-30",
+        "executionDateTime": "2023-03-30T04:40:54Z",
+        "transactionAmount": {
+          "currency": "EUR",
+          "amount": 100.0
+        },
+        "transactionType": "Diversen",
+        "remittanceInformationUnstructured": "RC AFREK. REK. 92 EUR<br>COR.PERIODE 01.07 T/M 30.09.2022<br>CREDITRENTE<br>Valutadatum: 01-10-2022"
+      }
+    ],
+    "pending": [
+      {
+        "transactionId": "022614321069976205000000001",
+        "endToEndId": "6434799",
+        "executionDateTime": "2023-03-30T04:40:54Z",
+        "transactionAmount": {
+          "currency": "EUR",
+          "amount": -100.0
+        },
+        "transactionType": "Incasso",
+        "remittanceInformationUnstructured": "Naam: NAAM VAN DE REKENING NL31RABO0000000000<br>Omschrijving: 9200643479900000<br>KENMERK 15348915 Diverse facturen<br>Verznr. 06434799 Vvd 1-11-2022<br>IBAN: NL31RABO0000000000<br>Kenmerk: 6434799<br>Machtiging ID: 0000000073<br>Incassant ID: NL67ZZZ241173110000<br>Doorlopende incasso<br>Valutadatum: 20-11-2022"
+      }
+    ],
+    "info": [],
+    "standingOrderAgreementInformation": []
+  }
+}

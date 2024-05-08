@@ -78,8 +78,11 @@ acc_data = json.loads(acc_response.text)
 acc_id = acc_data['accounts'][0]['resourceId']
 balance_url = acc_data['accounts'][0]['_links']['balances']['href']
 transactions_url = acc_data['accounts'][0]['_links']['transactions']['href']
+print("======Balance URL=======")
 print(balance_url)
+print("======Transaction URL=======")
 print(transactions_url)
+print("======Account data=======")
 print(acc_data)
 
 gen_bal = INGAPI.INGAPI(host="https://api.sandbox.ing.com", client_id="5ca1ab1e-c0ca-c01a-cafe-154deadbea75")
@@ -91,13 +94,14 @@ bal_response = ctoken_gen.query(
     method="get",
     body=payload,
     token=response_ctoken_data,
-    endpoint=f"/v3/accounts/{acc_id}/balances"
+    endpoint=balance_url
 )
 
 
 bal_data = json.loads(bal_response.text)
 
-#print(bal_data)
+print("======Balance data=======")
+print(bal_data)
 
 gen_trans = INGAPI.INGAPI(host="https://api.sandbox.ing.com", client_id="5ca1ab1e-c0ca-c01a-cafe-154deadbea75")
 
@@ -105,10 +109,11 @@ trans_response = ctoken_gen.query(
     method="get",
     body=payload,
     token=response_ctoken_data,
-    endpoint=f"/v3/accounts/{acc_id}/transactions"
+    endpoint=transactions_url
 )
 
 trans_data = json.loads(trans_response.text)
-#print(trans_data)
+print("======Transactions data=======")
+print(trans_data)
 
-#ING reference code for reported issue: 1713095655241
+#ING reference code for reported issue: 1714160105108

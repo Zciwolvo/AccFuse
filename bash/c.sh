@@ -11,7 +11,7 @@
 
 
 keyId="5ca1ab1e-c0ca-c01a-cafe-154deadbea75"
-certPath="./certs/"
+certPath="../certs/ing/"
 httpHost="https://api.sandbox.ing.com"
 
 # httpMethod value must be in lower case

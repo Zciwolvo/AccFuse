@@ -3,7 +3,7 @@ import re  # Import regular expressions for parsing HTML
 import webbrowser  # Import webbrowser module
 import uuid
 
-from BNP_requests import get_access_token, get_authorization_code, get_balance_data, get_ibans, get_new_access_token, get_transaction_data
+from BNP_requests import get_access_token, get_authorization_code, get_balance_data, get_ibans, get_new_access_token, get_transaction_data, get_account_data
 
 app_id = "faadd989-102d-4ba1-b9fd-c01d45c75849"
 client_secret = "6270e8b2f3a78b447271e02c67e7a37e7ae52d7a86f137335c6ec825bdba3ecc5c55b33ba132db8e97215aeca0046ee2"
@@ -34,6 +34,7 @@ headers = {
     "Accept": "*/*",
 }
 
+account_data = get_account_data(url, headers)
 iban_list = get_ibans(url, headers)
 accounts = ",".join(iban_list)
 
@@ -94,7 +95,9 @@ if new_access_token:
         balance_data.append(balance)
 else:
     print("Token exchange failed")
-    
+
+print("==========ACCOUNT DATA=============")
+print(account_data)
 print("==========TRANSACTION DATA=============")
 print(transaction_data)
 print("==========BALANCE DATA=================")

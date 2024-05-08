@@ -1,0 +1,17 @@
+{
+  "account": {
+    "iban": "NL69INGB0123456789",
+    "maskedPan": "",
+    "currency": "EUR"
+  },
+  "balances": [
+    {
+      "balanceType": "expected",
+      "balanceAmount": {
+        "currency": "EUR",
+        "amount": 100.12
+      },
+      "lastChangeDateTime": "2022-07-01T09:16:54.991Z"
+    }
+  ]
+}

@@ -3,19 +3,43 @@ import json
 
 # Replace with your actual Client ID and Redirect URI
 client_id = "aebe0c6d-5ece-4485-abbd-d87635f8ddf4"
-redirect_uri = "http://127.0.0.1:5000/get_code"
+client_secret = "6f59d588-bbd4-4174-a3e3-a274035ace86"
+api_host = "api-sandbox.commerzbank.com"
 
-# Construct the URL with string formatting
-url = f"https://api-sandbox.commerzbank.com/auth/realms/sandbox/protocol/openid-connect/auth?" \
-      f"response_type=code&client_id={client_id}&redirect_uri={redirect_uri}"
+# Step 1: Request an access token
+token_url = f"https://{api_host}/auth/realms/sandbox/protocol/openid-connect/token"
+payload = {
+    "grant_type": "client_credentials",
+    "client_id": client_id,
+    "client_secret": client_secret
+}
 
-# Send the GET request
-response = requests.get(url)
-print(url)
+response = requests.post(token_url, data=payload)
+token_data = response.json()
 
-# Check for successful response (200 status code)
-if response.status_code == 200:
-    print("Request successful!")
+if "access_token" in token_data:
+    access_token = token_data["access_token"]
+    print("Access token obtained successfully!")
 else:
-    print(f"Request failed: {response.status_code}")
-    print(response.text)  # Print the response body for debugging
+    print("Error obtaining access token:", token_data.get("error_description", "Unknown error"))
+
+
+api_host = "api-sandbox.commerzbank.com"
+url = f"https://{api_host}/accounts-api/v3/accounts/{client_id}"
+
+# Set the headers
+headers = {
+    "Accept": "application/json",
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json; charset=UTF-8"
+}
+
+# Make the GET request
+response = requests.get(url, headers=headers)
+
+# Check the response
+if response.status_code == 200:
+    print("GET request successful!")
+    print("Response:", response.json())
+else:
+    print("Error making GET request:", response.text)

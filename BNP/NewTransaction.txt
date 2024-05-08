@@ -1,0 +1,111 @@
+Einstein
+2167014872
+46Q1W?lq#uW2Bm
+
+Max
+4085920836
+91a65627-2803-492c-8253-403f21a0d0e8
+
+{
+
+  "paymentInformationId": "dd42acfb1cda4dc3b86900275be214df",
+
+  "creationDateTime": "2024-05-07T11:12:32Z",
+
+  "requestedExecutionDate": "2024-05-07T11:13:32Z",
+
+  "numberOfTransactions": 1,
+
+  "initiatingParty": {
+
+    "name": "AccFuse"
+
+  },
+
+  "paymentTypeInformation": {
+
+    "serviceLevel": "SEPA"
+
+  },
+
+  "debtor": {
+
+    "name": "Igor Gawłowicz"
+
+  },
+
+   "debtorAccount": {
+
+    "iban": "BE71359338085490",
+
+    "currency": "EUR"
+
+  },
+
+    "beneficiary": {
+
+      "creditor": {
+
+        "name": "Max Born"
+
+      },
+
+      "creditorAccount": {
+
+        "iban": "BE37922344684719",
+
+        "currency": "EUR"
+
+      }
+
+    },
+
+    "creditTransferTransaction": [
+
+      {
+
+        "paymentId": {
+
+          "instructionId": "dd42acfb1cda4dc3b86900275be214df",
+
+          "endToEndId": "dd42acfb1cda4dc3b86900275be214df"
+
+        },
+
+        "instructedAmount": {
+
+          "currency": "EUR",
+
+          "amount": "5.00"
+
+        },
+
+        "remittanceInformation": {
+
+          "unstructured": [
+
+            "Hello again and again"
+
+          ]
+
+        }
+
+      }
+
+    ],
+
+    "supplementaryData": {
+
+      "acceptedAuthenticationApproach": [
+
+        "REDIRECT"
+
+      ],
+
+      "successfulReportUrl": "https://eh-srv-wa-01b-testprod-web.azurewebsites.net/Callback?flowId=123",
+
+      "unsuccessfulReportUrl": "https://eh-srv-wa-01b-testprod-web.azurewebsites.net/Callback?flowId=123"
+
+    }
+
+  }

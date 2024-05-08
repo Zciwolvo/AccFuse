@@ -31,7 +31,15 @@ def get_ibans(url, headers):
         print("Failed to retrieve accounts:", response.status_code, response.text)
         return ""
 
-
+def get_account_data(url, headers):
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        print("Failed to retrieve accounts:", response.status_code, response.text)
+        return ""
+    
 def get_authorization_code(url, payload, headers):
     """
     Sends a POST request to the authorization URL with the provided payload and headers.
