@@ -46,7 +46,7 @@ headers_authorize = {
     "Accept": "application/json",
 }
 payload_authorize = {
-    "redirect_uri": "http://127.0.0.1:5000/get_code",
+    "redirect_uri": "https://www.igorgawlowicz.pl/get_data",
     "scope": "aisp",
     "response_type": "code",
     "accounts": accounts,
@@ -56,7 +56,7 @@ payload_authorize = {
 authorization_code = get_authorization_code(url_authorize, payload_authorize, headers_authorize)
 
 # Open the authorization URL in the user's default browser
-NBP_url = f"https://sandbox.auth.bnpparibasfortis.com/cardsAuthorizeConfirm?code={authorization_code}&redirectTo=http://127.0.0.1:5000/get_code&state=api&appName=AccFuse&cards=N"
+NBP_url = f"https://sandbox.auth.bnpparibasfortis.com/cardsAuthorizeConfirm?code={authorization_code}&redirectTo=https://www.igorgawlowicz.pl/get_data&state=api&appName=AccFuse&cards=N"
 webbrowser.open(NBP_url)
 
 # Here, your program execution would pause as the user interacts with the browser
@@ -68,7 +68,7 @@ user_input = input("Press Enter after completing authorization and copying the c
 url_token = "https://sandbox.auth.bnpparibasfortis.com/token"
 payload_token = {
     "grant_type": "authorization_code",
-    "redirect_uri": "http://127.0.0.1:5000/get_code",
+    "redirect_uri": "https://www.igorgawlowicz.pl/get_data",
     "client_id": app_id,
     "client_secret": client_secret,
     "scope": "aisp",

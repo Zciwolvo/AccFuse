@@ -2,8 +2,8 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/get_code', methods=['GET'])
-def get_code():
+@app.route('/get_data', methods=['GET'])
+def get_data():
     # Retrieve the value of the 'code' parameter from the URL
     code = request.args.get('code')
 
