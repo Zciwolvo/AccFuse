@@ -33,14 +33,14 @@ response_url = gen_url.query(
     method="get",
     body=payload,
     token=access_token,
-    endpoint="/oauth2/authorization-server-url?scope=payment-accounts%3Abalances%3Aview%20payment-accounts%3Atransactions%3Aview&redirect_uri=https://www.igorgawlowicz.pl/get_data"
+    endpoint="/oauth2/authorization-server-url?scope=payment-accounts%3Abalances%3Aview%20payment-accounts%3Atransactions%3Aview&redirect_uri=htttps://www.igorgawlowicz.com"
 )
 
 response_url_data = json.loads(response_url.text)['location']
 
 account_id = response_url_data[43:79]
 
-response_url_data += r"/?&client_id=5ca1ab1e-c0ca-c01a-cafe-154deadbea75&state=ANY_ARBITRARY_VALUE&scope=payment-accounts%3Abalances%3Aview+payment-accounts%3Atransactions%3Aview&redirect_uri=https://www.igorgawlowicz.pl/get_data&response_type=code"
+response_url_data += r"/?&client_id=5ca1ab1e-c0ca-c01a-cafe-154deadbea75&state=ANY_ARBITRARY_VALUE&scope=payment-accounts%3Abalances%3Aview+payment-accounts%3Atransactions%3Aview&redirect_uri=htttps://www.igorgawlowicz.com&response_type=code"
 
 print(response_url_data)
 
