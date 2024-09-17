@@ -1,0 +1,119 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="registerModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="registerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <!-- First Name and Last Name -->
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="firstName">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                placeholder="First Name"
+                required
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lastName">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastName"
+                placeholder="Last Name"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+
+          <!-- Terms of Service and Privacy Policy -->
+          <div class="form-group form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="termsCheck"
+              required
+            />
+            <label class="form-check-label" for="termsCheck"
+              >I agree to the <a href="/tos">Terms of Service</a> and
+              <a href="/privacy">Privacy Policy</a></label
+            >
+          </div>
+
+          <!-- Sign Up Button -->
+          <button type="submit" class="btn btn-primary btn-block">
+            Sign Up
+          </button>
+
+          <!-- Divider -->
+          <hr />
+
+          <!-- Login with Google Button -->
+          <button type="button" class="btn btn-outline-danger btn-block">
+            <img
+              src="https://img.icons8.com/color/16/000000/google-logo.png"
+              alt="Google Logo"
+            />
+            Sign Up with Google
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

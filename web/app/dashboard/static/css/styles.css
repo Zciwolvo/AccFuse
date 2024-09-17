@@ -1,0 +1,21 @@
+.icon-container i {
+  font-size: 1.5rem;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border: none;
+}
+
+.card h5 {
+  margin-top: 10px;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.text-muted {
+  font-size: 0.875rem;
+  color: #888;
+}

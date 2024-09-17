@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help - How We Work</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        color: #333;
+      }
+      .content-wrapper {
+        max-width: 960px;
+        margin: auto;
+        padding: 2rem;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #000;
+      }
+      .section-subtitle {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        color: #555;
+      }
+      .text-muted {
+        color: #6c757d !important;
+      }
+      .image-placeholder {
+        width: 100%;
+        height: 300px;
+        background-color: #ddd;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+      }
+    </style>
+  </head>
+  {% include 'navbar.html' %}
+  <body>
+    <div class="content-wrapper mt-5">
+      <h1 class="section-title text-center">How We Work</h1>
+
+      <!-- Disclaimer Section -->
+      <section>
+        <h2 class="section-subtitle">Disclaimer</h2>
+        <p>
+          We are a website that utilizes PSD2 to retrieve your data from your
+          bank account. Please keep in mind that we only access your account
+          information; we cannot create any payment intents or initiate any
+          transactions with your account. Our primary purpose is to perform
+          merged analytics for all your financial data. By default, we save the
+          current state of your connected accounts, but you have the option to
+          remove this data from our database. Remember, we only manage your
+          data—you remain the owner.
+        </p>
+      </section>
+
+      <!-- How We Work Section -->
+      <section>
+        <h2 class="section-subtitle">How We Work</h2>
+
+        <p>
+          To get started with our service, you'll first need to create an
+          account on our website. This account will serve as the foundation for
+          all your banking information and analytics.
+        </p>
+
+        <div class="image-placeholder">Image Placeholder</div>
+
+        <p>
+          Next, you'll choose one of the banks we work with that you have an
+          account in. Thanks to the PSD2 directive, we can securely retrieve all
+          relevant information about your accounts, including transaction
+          history, balance details, and your personal information such as your
+          name and surname.
+        </p>
+
+        <!-- PSD2 Explanation -->
+        <h3 class="section-subtitle">What is PSD2?</h3>
+        <p class="text-muted">
+          PSD2, or the Payment Services Directive 2, is a European regulation
+          designed to make payments more secure, boost innovation, and help
+          banking services adapt to new technologies. It mandates that banks
+          open their payment services and customer data to third-party providers
+          (like us) in a secure and standardized way. This allows us to access
+          your financial data safely and offer services such as consolidated
+          analytics across multiple bank accounts.
+        </p>
+
+        <p>
+          Once we've obtained your account information, our backend processes
+          and analyzes the data. This analyzed data is then presented to you on
+          your personalized dashboard, offering a comprehensive overview of your
+          financial status across all connected accounts.
+        </p>
+      </section>
+    </div>
+    {% include 'footer.html' %}
+    <!-- Bootstrap JS (Optional, for responsiveness) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
