@@ -1,0 +1,148 @@
+[
+  {
+    "_links": {
+      "self": {
+        "href": "/psd2/v3/accounts/BE15054777401700EUR/transactions?brand=hb&index=1&pageSize=25",
+        "templated": "False"
+      },
+      "parent-list": {
+        "href": "/psd2/v3/accounts?brand=hb",
+        "templated": "False"
+      },
+      "balances": {
+        "href": "/psd2/v3/accounts/BE15054777401700EUR/balances?brand=hb",
+        "templated": "False"
+      }
+    },
+    "transactions": [
+      {
+        "resourceId": 17142,
+        "entryReference": "2024050720240507132635320000",
+        "transactionAmount": {
+          "currency": "EUR",
+          "amount": "-5.00"
+        },
+        "creditDebitIndicator": "DBIT",
+        "status": "BOOK",
+        "bookingDate": "2024-05-07",
+        "valueDate": "2024-05-07",
+        "transactionDate": "2024-05-07",
+        "bankTransactionCode": {
+          "domain": "PMNT",
+          "family": "ICDT",
+          "subFamily": "ESCT"
+        },
+        "relatedParties": {
+          "debtorAgent": {
+            "bicFi": "GEBABBEB"
+          },
+          "debtor": {
+            "name": "Max Born - hb"
+          },
+          "debtorAccount": {
+            "iban": "BE37922344684719"
+          }
+        },
+        "transactionCategoryPurpose": "SALA",
+        "additionalTransactionInformation": {
+          "statementReference": 17142,
+          "eodOperationReference": 17142,
+          "endToEndReference": "dd42acfb1cda4dc3b86900275be214df17142",
+          "narrative": [
+            "1 - narrative line:",
+            "2 - narrativ",
+            "3 - narrative line: Dummy conten",
+            "4 - narrative line",
+            "5",
+            "6 - narrative ",
+            "7 ",
+            "8 - narrative line: Dummy conten",
+            "9 - ",
+            "10 - n",
+            "11 - narrative line: Dummy ",
+            "12 - narrative l",
+            "13 - narrati",
+            "14 - narrative line: D",
+            "15 - narrat",
+            "16 ",
+            "17 - narrative line: Du",
+            "18 - narrative line: ",
+            "19 - narrative li"
+          ]
+        },
+        "remittanceInformation": {
+          "unstructured": ["Hello again and again"]
+        }
+      },
+      {
+        "resourceId": 17141,
+        "entryReference": "2024050720240507132414038000",
+        "transactionAmount": {
+          "currency": "EUR",
+          "amount": "5.00"
+        },
+        "creditDebitIndicator": "CRDT",
+        "status": "BOOK",
+        "bookingDate": "2024-05-07",
+        "valueDate": "2024-05-07",
+        "transactionDate": "2024-05-07",
+        "bankTransactionCode": {
+          "domain": "PMNT",
+          "family": "ICDT",
+          "subFamily": "ESCT"
+        },
+        "relatedParties": {
+          "creditorAgent": {
+            "bicFi": "GEBABBEB"
+          },
+          "creditor": {
+            "name": "Max Born - hb"
+          },
+          "creditorAccount": {
+            "iban": "BE37922344684719"
+          }
+        },
+        "transactionCategoryPurpose": "SALA",
+        "additionalTransactionInformation": {
+          "statementReference": 17141,
+          "eodOperationReference": 17141,
+          "endToEndReference": "dd42acfb1cda4dc3b86900275be214df17141",
+          "narrative": [
+            "1 - narrat",
+            "2 ",
+            "3 - narrative line: Dummy co",
+            "4 - narrative line: Dummy content ge",
+            "5 - narrative line: Dummy content g",
+            "6 - narrative l",
+            "7 - narrative line: Dummy content gen"
+          ],
+          "transactionResourceId": "17141"
+        },
+        "remittanceInformation": {
+          "unstructured": ["Hello again and again"]
+        },
+        "details": {
+          "href": "/psd2/v3/accounts/BE37922344684719EUR/transactions/17141/details",
+          "templated": false
+        }
+      }
+    ]
+  },
+  {
+    "_links": {
+      "self": {
+        "href": "/psd2/v3/accounts/BE62505480160914EUR/transactions?brand=hb&index=1&pageSize=25",
+        "templated": false
+      },
+      "parent-list": {
+        "href": "/psd2/v3/accounts?brand=hb",
+        "templated": false
+      },
+      "balances": {
+        "href": "/psd2/v3/accounts/BE62505480160914EUR/balances?brand=hb",
+        "templated": false
+      }
+    },
+    "transactions": []
+  }
+]

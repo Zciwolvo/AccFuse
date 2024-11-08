@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database Preview</title>
+  </head>
+  <body>
+    <h1>Database Preview</h1>
+    <ul>
+      <li><a href="{{ url_for('db.view_users') }}">View Users</a></li>
+      <li><a href="{{ url_for('db.view_banks') }}">View Banks</a></li>
+      <li><a href="{{ url_for('db.view_accounts') }}">View Accounts</a></li>
+      <li><a href="{{ url_for('db.view_balances') }}">View Balances</a></li>
+      <li>
+        <a href="{{ url_for('db.view_transactions') }}">View Transactions</a>
+      </li>
+      <li>
+        <a href="{{ url_for('db.view_bank_transaction_codes') }}"
+          >View Bank Transaction Codes</a
+        >
+      </li>
+      <li>
+        <a href="{{ url_for('db.view_related_parties') }}"
+          >View Related Parties</a
+        >
+      </li>
+    </ul>
+  </body>
+</html>

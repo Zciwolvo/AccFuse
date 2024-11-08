@@ -1,0 +1,58 @@
+----REQUEST----
+curl -X POST 'https://sandbox.auth.bnpparibasfortis.com/authenticate?client_id=faadd989-102d-4ba1-b9fd-c01d45c75849&brand=fintro' 
+        -d '{
+ "username": "3477246131",
+ "password": "c2c69166-e803-46e3-905c-c052c829b2e9",
+ "next": ""
+}'
+----RESPONSE----
+STATUS:
+200
+BODY:
+{
+  "data": {
+    "token_type": "bearer",
+    "access_token": "afd915fa-425c-45c0-ab83-83e0f5ade896",
+    "expires_in": 3600,
+    "expires": "2024-10-06T13:55:05.973Z",
+    "refresh_token": "60b43278-7516-41e3-a641-fd5ebe64a53a"
+  }
+}
+----REQUEST----
+curl -X POST 'https://sandbox.auth.bnpparibasfortis.com/authorize?client_id=faadd989-102d-4ba1-b9fd-c01d45c75849&state=api&brand=fintro' 
+          -H 'Authorization: Bearer afd915fa-425c-45c0-ab83-83e0f5ade896' 
+        -d '{
+ "redirect_uri": "https://www.igorgawlowicz.pl/get_data",
+ "scope": "aisp",
+ "response_type": "code",
+ "accounts": "BE26176547916966"
+}'
+----RESPONSE----
+STATUS:
+301
+HEADERS:
+{
+  "location": "/cardsAuthorizeConfirm?code=62789f0a-0933-4df3-8eb9-69b450b4c4c4&redirectTo=https://www.igorgawlowicz.pl/get_data&state=api&appName=AccFuse&cards=N"
+}
+BODY:
+undefined
+----REQUEST----
+curl -X POST 'https://sandbox.auth.bnpparibasfortis.com/token' 
+        -d '{
+ "grant_type": "authorization_code",
+ "redirect_uri": "https://www.igorgawlowicz.pl/get_data",
+ "client_id": "faadd989-102d-4ba1-b9fd-c01d45c75849",
+ "client_secret": "6270e8b2f3a78b447271e02c67e7a37e7ae52d7a86f137335c6ec825bdba3ecc5c55b33ba132db8e97215aeca0046ee2",
+ "scope": "aisp",
+ "code": "62789f0a-0933-4df3-8eb9-69b450b4c4c4"
+}'
+----RESPONSE----
+STATUS:
+200
+BODY:
+{
+  "token_type": "bearer",
+  "access_token": "bdde9d43-5820-4b8d-8a39-8e364b33177f",
+  "expires_in": 3600,
+  "refresh_token": "3f55cce6-f28c-4761-b651-0a3fdb49ab77"
+}

@@ -1,0 +1,31 @@
+{
+  "_links": {
+    "self": {
+      "href": "/psd2/v3/accounts?brand=fintro&pageSize=25&index=1",
+      "templated": "False"
+    }
+  },
+  "accounts": [
+    {
+      "resourceId": "BE26176547916966EUR",
+      "bicFi": "GEBABBEB",
+      "name": "Albert Einstein - FINTRO",
+      "usage": "PRIV",
+      "cashAccountType": "CACC",
+      "product": "CUR - FINTRO",
+      "currency": "EUR",
+      "accountId": { "iban": "BE26176547916966" },
+      "psuStatus": "Holder",
+      "_links": {
+        "balances": {
+          "href": "/psd2/v3/accounts/BE26176547916966EUR/balances",
+          "templated": "False"
+        },
+        "transactions": {
+          "href": "/psd2/v3/accounts/BE26176547916966EUR/transactions",
+          "templated": "False"
+        }
+      }
+    }
+  ]
+}

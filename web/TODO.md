@@ -10,6 +10,11 @@
     - Banks included in project
     - How it works
   - User dashboard
+    - Month by month summary
+    - Transactions
+    - Overview throughout accounts as a pie chart
+    - income/outcome
+    - Possiblity to exclude chosen accounts
   - User information page
 - Design database for accounts information
 - Design database for user accounts

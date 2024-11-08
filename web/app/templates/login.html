@@ -21,7 +21,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="loginForm">
           <!-- Email -->
           <div class="form-group">
             <label for="loginEmail">Email</label>
@@ -48,20 +48,40 @@
 
           <!-- Login Button -->
           <button type="submit" class="btn btn-primary btn-block">Login</button>
-
-          <!-- Divider -->
-          <hr />
-
-          <!-- Login with Google Button -->
-          <button type="button" class="btn btn-outline-danger btn-block">
-            <img
-              src="https://img.icons8.com/color/16/000000/google-logo.png"
-              alt="Google Logo"
-            />
-            Login with Google
-          </button>
+          <div id="loginMessage" class="mt-2 text-danger"></div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const response = await fetch("/user/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+          document.getElementById("loginMessage").textContent =
+            "Login successful!";
+          setTimeout(() => window.location.reload(), 1000); // Reload the page after 1 second
+        } else {
+          const data = await response.json();
+          document.getElementById("loginMessage").textContent =
+            data.message || "Login failed";
+        }
+      } catch (error) {
+        document.getElementById("loginMessage").textContent =
+          "An error occurred. Please try again.";
+      }
+    });
+</script>

@@ -1,0 +1,38 @@
+[
+  {
+    "_links": {
+      "self": {
+        "href": "/psd2/v3/accounts/BE15054777401700EUR/balances?brand=hb",
+        "templated": "False"
+      },
+      "parent-list": {
+        "href": "/psd2/v3/accounts?brand=bnppf",
+        "templated": "False"
+      },
+      "transactions": {
+        "href": "/psd2/v3/accounts/BE15054777401700EUR/transactions?brand=bnppf",
+        "templated": "False"
+      }
+    },
+    "balances": [
+      {
+        "name": "Closing balance",
+        "balanceType": "CLBD",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": { "currency": "EUR", "amount": "100.00" }
+      },
+      {
+        "name": "Operational Balance",
+        "balanceType": "OTHR",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": { "currency": "EUR", "amount": "100.00" }
+      },
+      {
+        "name": "Available balance",
+        "balanceType": "ITAV",
+        "referenceDate": "2024-03-08",
+        "balanceAmount": { "currency": "EUR", "amount": "100.00" }
+      }
+    ]
+  }
+]

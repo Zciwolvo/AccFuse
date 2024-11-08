@@ -1,0 +1,31 @@
+{
+  "_links": {
+    "self": {
+      "href": "/psd2/v3/accounts?brand=hb&pageSize=25&index=1",
+      "templated": "False"
+    }
+  },
+  "accounts": [
+    {
+      "resourceId": "BE15054777401700EUR",
+      "bicFi": "GEBABBEB",
+      "name": "Felix Bloch - BNPPF",
+      "usage": "PRIV",
+      "cashAccountType": "CACC",
+      "product": "CUR - BNPPF",
+      "currency": "EUR",
+      "accountId": { "iban": "BE15054777401700" },
+      "psuStatus": "Holder",
+      "_links": {
+        "balances": {
+          "href": "/psd2/v3/accounts/BE15054777401700EUR/balances",
+          "templated": "False"
+        },
+        "transactions": {
+          "href": "/psd2/v3/accounts/BE15054777401700EUR/transactions",
+          "templated": "False"
+        }
+      }
+    }
+  ]
+}

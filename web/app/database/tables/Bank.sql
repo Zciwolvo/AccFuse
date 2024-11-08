@@ -1,0 +1,5 @@
+CREATE TABLE Bank (
+    bank_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    bic VARCHAR(11) UNIQUE NOT NULL
+);
