@@ -53,5 +53,8 @@ def create_app():
     
     from .user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix="/user")
+    
+    from .BankAPI import account as account_blueprint
+    app.register_blueprint(account_blueprint, url_prefix="/account")
         
     return app

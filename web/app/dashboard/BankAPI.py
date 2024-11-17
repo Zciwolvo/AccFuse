@@ -1,7 +1,6 @@
 import requests
 import re
 import uuid
-import webbrowser
 
 class BankAPI:
     def __init__(self, bank_config):
@@ -12,18 +11,16 @@ class BankAPI:
         self.bank_config = bank_config
         self.client_id = bank_config["client_id"]
         self.client_secret = bank_config["client_secret"]
-        self.user = bank_config["user"]
-        self.password = bank_config["password"]
         self.brand = bank_config["brand"]
         self.x_request_id = str(uuid.uuid4())
         self.transaction_data = []
         self.balance_data = []
 
-    def get_access_token(self):
+    def get_access_token(self, user, password):
         url = f"{self.bank_config['auth_base_url']}/authenticate?client_id={self.client_id}&brand={self.brand}"
         payload = {
-            "username": self.user,
-            "password": self.password,
+            "username": user,
+            "password": password,
             "next": "",
         }
         headers = {"Content-Type": "application/json"}
@@ -137,46 +134,23 @@ class BankAPI:
             print("Failed to retrieve accounts:", response.status_code, response.text)
             return ""
 
-    def fetch_account_data(self):
-        access_token = self.get_access_token()
+    def fetch_account_data(self, access_token):
+        """Fetch account, transaction, and balance data."""
         ibans = self.get_ibans(access_token)
-        authorization_code = self.get_authorization_code(access_token, ibans)
-        webbrowser.open(f"{self.bank_config['auth_base_url']}/cardsAuthorizeConfirm?code={authorization_code}&redirectTo={self.bank_config["redirect_uri"]}&state=api&appName=AccFuse&cards=N")
+        account_data = self.get_account_data(access_token)
+        transaction_data = []
+        balance_data = []
 
-        input("Press Enter after completing authorization and copying the code: ")
-        new_access_token = self.get_new_access_token(authorization_code)
+        for iban in ibans:
+            transaction = self.get_transaction_data(iban, access_token)
+            balance = self.get_balance_data(iban, access_token)
+            if transaction:
+                transaction_data.append(transaction)
+            if balance:
+                balance_data.append(balance)
 
-        if new_access_token:
-            account_data = self.get_account_data(new_access_token)
-            for iban in ibans:
-                transaction = self.get_transaction_data(iban, new_access_token)
-                self.transaction_data.append(transaction)
-                balance = self.get_balance_data(iban, new_access_token)
-                self.balance_data.append(balance)
-            return {"account": account_data, "transactions": self.transaction_data, "balances": self.balance_data}
-        else:
-            print("Token exchange failed")
-            return None
-
-# Sample bank configuration
-fintro_config = {
-    "client_id": "faadd989-102d-4ba1-b9fd-c01d45c75849",
-    "client_secret": "6270e8b2f3a78b447271e02c67e7a37e7ae52d7a86f137335c6ec825bdba3ecc5c55b33ba132db8e97215aeca0046ee2",
-    "user": "3477246131",
-    "password": "c2c69166-e803-46e3-905c-c052c829b2e9",
-    "brand": "fintro",
-    "auth_base_url": "https://sandbox.auth.bnpparibasfortis.com",
-    "api_base_url": "https://sandbox.api.bnpparibasfortis.com/psd2/v3",
-    "redirect_uri": "https://www.igorgawlowicz.pl/get_data"
-}
-
-# Instantiate and use the class for Fintro bank
-fintro_api = BankAPI(fintro_config)
-account_data = fintro_api.fetch_account_data()
-
-print("==========ACCOUNT DATA=============")
-print(account_data["account"])
-print("==========TRANSACTION DATA=============")
-print(account_data["transactions"])
-print("==========BALANCE DATA=================")
-print(account_data["balances"])
+        return {
+            "account": account_data,
+            "transactions": transaction_data,
+            "balances": balance_data,
+        }
