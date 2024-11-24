@@ -25,12 +25,11 @@ class BankAPI:
         }
         headers = {"Content-Type": "application/json"}
         response = requests.post(url, json=payload, headers=headers)
-        if response.status_code == 200:
+        if response.status_code == 200 and response.headers["content-type"].strip().startswith("application/json"):
             data = response.json()
             return data["data"]["access_token"]
         else:
-            print("Authentication failed:", response.status_code, response.text)
-            exit()
+            return None
 
     def get_ibans(self, access_token):
         url = f"{self.bank_config['api_base_url']}/accounts?brand={self.brand}"

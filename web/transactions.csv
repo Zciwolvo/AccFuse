@@ -1,0 +1,3 @@
+transaction_id,account_id,resource_id,entry_reference,amount,currency,credit_debit_indicator,status,booking_date,value_date,transaction_date,transaction_category_purpose,end_to_end_reference,narrative,unstructured_remittance_info,created_at
+1,2,17142,2024050720240507132635320000,-5.00,EUR,DBIT,BOOK,2024-05-07,2024-05-07,2024-05-07,SALA,NULL,NULL,NULL,"2024-11-20 23:27:41"
+2,2,17141,2024050720240507132414038000,5.00,EUR,CRDT,BOOK,2024-05-07,2024-05-07,2024-05-07,SALA,NULL,NULL,NULL,"2024-11-20 23:27:41"

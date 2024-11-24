@@ -1,0 +1,4 @@
+account_id,user_id,bank_id,resource_id,iban,name,usage,cash_account_type,product,currency,psu_status,created_at,updated_at
+1,1,1,BE26176547916966EUR,BE26176547916966,"Albert Einstein - FINTRO",PRIV,CACC,"CUR - FINTRO",EUR,Holder,"2024-11-20 23:27:10","2024-11-20 23:27:10"
+2,1,2,BE37922344684719EUR,BE37922344684719,"Max Born - BNPPF",PRIV,CACC,"CUR - BNPPF",EUR,Holder,"2024-11-20 23:27:41","2024-11-20 23:27:41"
+3,1,2,BE62505480160914EUR,BE62505480160914,"Max Born - HB",PRIV,CACC,"CUR - HB",EUR,Holder,"2024-11-20 23:27:41","2024-11-20 23:27:41"

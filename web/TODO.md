@@ -26,3 +26,18 @@
 - Write interfaces for remaining banks
 - Write front for login page
 - Write front for account details
+
+Account Performance Metrics:
+
+Net Balance Change: Show the net change in balance over a specified time (incomes minus outcomes).
+Account Utilization: Show which accounts have the highest transaction volumes or balances.
+
+Interactive Transaction Search:
+
+Implement a live search feature with filters for quick access to specific transactions.
+Allow searching by IBAN, account name, or narrative.
+
+Export and Sharing Options:
+
+Add functionality to export analytics or transaction data to CSV, Excel, or PDF.
+Provide a way to share account performance or spending reports with others.

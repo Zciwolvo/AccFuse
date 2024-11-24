@@ -1,34 +1,70 @@
-<div class="card mt-4">
+<div class="card" id="transactions">
+  <div class="card-header bg-secondary text-white">Recent Transactions</div>
   <div class="card-body">
-    <h5 class="card-title">Transaction</h5>
-    <table class="table">
+    <div class="card mb-4">
+      <div class="card-header">Transaction Filters</div>
+      <div class="card-body">
+        <form method="GET" action="{{ url_for('dashboard.index', _anchor='transactions') }}" id="filter-form">
+          <div>
+              <label for="min_amount">Min Amount (€):</label>
+              <input type="number" step="0.01" id="min_amount" name="min_amount" value="{{ request.args.get('min_amount', '') }}">
+          </div>
+          <div>
+              <label for="max_amount">Max Amount (€):</label>
+              <input type="number" step="0.01" id="max_amount" name="max_amount" value="{{ request.args.get('max_amount', '') }}">
+          </div>
+          <div>
+              <label for="start_date">Start Date:</label>
+              <input type="date" id="start_date" name="start_date" value="{{ request.args.get('start_date', '') }}">
+          </div>
+          <div>
+              <label for="end_date">End Date:</label>
+              <input type="date" id="end_date" name="end_date" value="{{ request.args.get('end_date', '') }}">
+          </div>
+          <div>
+              <label for="transaction_type">Transaction Type:</label>
+              <select id="transaction_type" name="transaction_type">
+                  <option value="" {% if not request.args.get('transaction_type') %}selected{% endif %}>All</option>
+                  <option value="CRDT" {% if request.args.get('transaction_type') == 'CRDT' %}selected{% endif %}>Credit</option>
+                  <option value="DBIT" {% if request.args.get('transaction_type') == 'DBIT' %}selected{% endif %}>Debit</option>
+              </select>
+          </div>
+          <div>
+              <label for="iban">IBAN:</label>
+              <input type="text" id="iban" name="iban" value="{{ request.args.get('iban', '') }}">
+          </div>
+          <div>
+              <label for="description">Description Phrase:</label>
+              <input type="text" id="description" name="description" value="{{ request.args.get('description', '') }}">
+          </div>
+          <div>
+              <label for="account_name">Account Name:</label>
+              <input type="text" id="account_name" name="account_name" value="{{ request.args.get('account_name', '') }}">
+          </div>
+          <button type="submit">Apply Filters</button>
+      </form>
+      </div>
+    </div>
+    <table class="table table-hover">
       <thead>
         <tr>
-          <th>Name</th>
           <th>Date</th>
+          <th>Account</th>
+          <th>Description</th>
           <th>Amount</th>
-          <th>Status</th>
+          <th>Type</th>
         </tr>
       </thead>
       <tbody>
+        {% for transaction in all_transactions %}
         <tr>
-          <td>Adobe After Effect</td>
-          <td>Sat, 20 Apr 2020</td>
-          <td>$80.09</td>
-          <td><span class="badge badge-success">Deposited</span></td>
+          <td>{{ transaction.booking_date }}</td>
+          <td>{{ transaction.account.iban }}</td>
+          <td>{{ transaction.narrative }}</td>
+          <td>{{ transaction.amount }} {{ transaction.currency }}</td>
+          <td>{{ transaction.credit_debit_indicator }}</td>
         </tr>
-        <tr>
-          <td>McDonald's</td>
-          <td>Fri, 19 Apr 2020</td>
-          <td>$7.03</td>
-          <td><span class="badge badge-success">Deposited</span></td>
-        </tr>
-        <tr>
-          <td>Levi's</td>
-          <td>Tue, 19 Apr 2020</td>
-          <td>$80.09</td>
-          <td><span class="badge badge-success">Deposited</span></td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>

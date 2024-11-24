@@ -1,10 +1,11 @@
 # app/__init__.py
-from flask import Flask
+from flask import Flask, redirect
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
 
 mail = Mail()
 jwt = JWTManager()
+
 
 def create_app():
     app = Flask(__name__)

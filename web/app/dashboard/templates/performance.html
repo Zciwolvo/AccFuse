@@ -1,0 +1,49 @@
+<div class="container mt-4" id="performance">
+  <h3>Account Performance Metrics</h3>
+
+  <!-- Year Selection -->
+  <form method="GET" class="form-inline mb-4">
+    <label for="selectedYear" class="mr-2">Select Year:</label>
+    <select name="selected_year" id="selectedYear" class="form-control mr-2">
+      {% for year in available_years %}
+      <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>
+        {{ year }}
+      </option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Apply</button>
+  </form>
+
+  <!-- Month-by-Month Analytics -->
+  <div class="column">
+    <div class="col-md-12">
+      <canvas id="monthlyNetChangeChart"></canvas>
+    </div>
+    <div class="col-md-12">
+      <canvas id="monthlyUtilizationChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Table: Monthly Data Breakdown -->
+  <h4 class="mt-4">Monthly Breakdown for {{ selected_year }}</h4>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th>Month</th>
+        <th>Total Incomes (€)</th>
+        <th>Total Outcomes (€)</th>
+        <th>Net Change (€)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for month_data in monthly_data %}
+      <tr>
+        <td>{{ month_data.month }}</td>
+        <td>{{ "%.2f" | format(month_data.incomes) }}</td>
+        <td>{{ "%.2f" | format(month_data.outcomes) }}</td>
+        <td>{{ "%.2f" | format(month_data.net_change) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

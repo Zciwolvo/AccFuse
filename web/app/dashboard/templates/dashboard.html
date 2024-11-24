@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AccFuse</title>
+    <title>User Dashboard</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -13,32 +13,312 @@
       href="{{ url_for('static', filename='css/styles.css') }}"
     />
   </head>
-  <body class="m-0">
-    <div class="flex-grow-1 p-4">
-      <!-- If no accounts are connected, show the Add Bank Account button -->
-      {% if not has_accounts %}
-        <div class="row">{% include 'connect_bank.html' %}</div>
-      {% else %}
-        <!-- Otherwise, show the dashboard overview -->
-        <div class="row">{% include 'overview.html' %}</div>
-    
-        <!-- Analytics Section -->
-        <div class="row">
-          <div class="col-md-8">{% include 'bars.html' %}</div>
-          <div class="col-md-4">{% include 'pie.html' %}</div>
-        </div>
-    
-        <!-- Transaction Table -->
-        <div class="row mt-4">
-          <div class="col-12">{% include 'transactions.html' %}</div>
-        </div>
-      {% endif %}
-    </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-</body>
+  <body>
+    {% include 'dashboard_navbar.html' %}
 
+    <div class="container mt-4">
+      {% if not has_accounts %}
+      <div class="alert alert-info text-center">
+        No bank accounts connected yet.
+        <a href="{{ url_for('dashboard.connect_bank') }}" class="alert-link"
+          >Connect a bank account</a
+        >.
+      </div>
+      {% else %}
+      <h2 class="mb-4">Welcome to your Dashboard</h2>
+
+      <!-- Bank Overview Section -->
+      {% include 'overview.html' %}
+
+      <!-- Analytics Section -->
+      {% include 'analytics.html' %} {% include 'performance.html' %} {% include
+      'predictions.html' %}
+
+      <!-- Transaction Table -->
+      {% include 'transactions.html' %} {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Bar Chart: Incomes and Outcomes
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: {{ bar_labels | safe }},
+          datasets: [
+            {
+              label: 'Incomes (€)',
+              data: {{ incomes | safe }},
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+            },
+            {
+              label: 'Outcomes (€)',
+              data: {{ outcomes | safe }},
+              backgroundColor: 'rgba(255, 99, 132, 0.6)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true },
+          },
+        },
+      });
+
+      // Pie Chart: Funds Distribution Across Accounts
+      const pieCtx = document.getElementById('pieChart').getContext('2d');
+      new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+          labels: {{ pie_labels | safe }},
+          datasets: [
+            {
+              data: {{ pie_data | safe }},
+              backgroundColor: [
+                '#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff', '#c9cbcf',
+              ],
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: { position: 'bottom' },
+          },
+        },
+      });
+    </script>
+    <script>
+      // Data Preparation: Month-by-Month Net Balance Change
+      const monthlyLabels = {{ monthly_labels | safe }};
+      const combinedNetChanges = {{ monthly_net_changes | safe }};
+      const combinedUtilizations = {{ monthly_utilizations | safe }};
+      const accountMonthlyData = {{ account_monthly_data | safe }}; // Per-account monthly data with names
+
+      // Colors for separate accounts
+      const accountColors = [
+        'rgba(255, 99, 132, 0.6)',
+        'rgba(54, 162, 235, 0.6)',
+        'rgba(255, 206, 86, 0.6)',
+        'rgba(75, 192, 192, 0.6)',
+        'rgba(153, 102, 255, 0.6)',
+      ];
+
+      // Net Balance Change Chart
+      const monthlyNetChangeCtx = document
+        .getElementById('monthlyNetChangeChart')
+        .getContext('2d');
+
+      const netChangeDatasets = [
+        {
+          label: 'Combined Net Balance Change (€)',
+          data: combinedNetChanges,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: true,
+        },
+      ];
+
+      let colorIndex = 0;
+      for (const [accountName, data] of Object.entries(accountMonthlyData)) {
+        netChangeDatasets.push({
+          label: `${accountName} Net Change (€)`,
+          data: data.monthly_net_changes, // Data for this account
+          borderColor: accountColors[colorIndex % accountColors.length],
+          backgroundColor: accountColors[colorIndex % accountColors.length],
+          fill: false,
+        });
+        colorIndex++;
+      }
+
+      new Chart(monthlyNetChangeCtx, {
+        type: 'line',
+        data: {
+          labels: monthlyLabels,
+          datasets: netChangeDatasets,
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      // Account Utilization Chart
+      const monthlyUtilizationCtx = document
+        .getElementById('monthlyUtilizationChart')
+        .getContext('2d');
+
+      const utilizationDatasets = [
+        {
+          label: 'Combined Transaction Volume',
+          data: combinedUtilizations,
+          backgroundColor: 'rgba(255, 159, 64, 0.6)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1,
+        },
+      ];
+
+      colorIndex = 0;
+      for (const [accountName, data] of Object.entries(accountMonthlyData)) {
+        utilizationDatasets.push({
+          label: `${accountName} Transactions`,
+          data: data.monthly_utilizations, // Data for this account
+          backgroundColor: accountColors[colorIndex % accountColors.length],
+          borderColor: accountColors[colorIndex % accountColors.length],
+          borderWidth: 1,
+        });
+        colorIndex++;
+      }
+
+      new Chart(monthlyUtilizationCtx, {
+        type: 'bar',
+        data: {
+          labels: monthlyLabels,
+          datasets: utilizationDatasets,
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+
+    <script>
+      // Function to show the context menu
+      function showContextMenu(event, cardElement) {
+        event.preventDefault(); // Prevent the default context menu from appearing
+
+        // Position the custom context menu near the mouse cursor
+        const contextMenu = document.getElementById("contextMenu");
+        contextMenu.style.display = "block";
+        contextMenu.style.left = `${event.pageX}px`;
+        contextMenu.style.top = `${event.pageY}px`;
+
+        // Store the selected account's element for further actions
+        window.selectedAccountElement = cardElement;
+      }
+
+      // Hide context menu when clicking anywhere else
+      document.addEventListener("click", () => {
+        const contextMenu = document.getElementById("contextMenu");
+        contextMenu.style.display = "none";
+      });
+
+      // Reload data action
+      function reloadData() {
+        window.location.href = "/connect_bank";
+      }
+
+      // Toggle account active status
+      function toggleAccountContext() {
+        const accountId =
+          window.selectedAccountElement.getAttribute("data-account-id");
+        const card =
+          window.selectedAccountElement.querySelector(".account-card");
+
+        // Determine the new status
+        const isCurrentlyDisabled = card.classList.contains("disabled");
+        const newStatus = isCurrentlyDisabled; // Flip the current status
+
+        // Make an AJAX request to update the account status in the database
+        fetch("/update_account_status", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ account_id: accountId, active: !newStatus }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              alert(`Error: ${data.error}`);
+            } else {
+              // Update the UI based on the new status
+              if (!newStatus) {
+                card.classList.remove("disabled");
+              } else {
+                card.classList.add("disabled");
+              }
+              window.location.href = "/dashboard";
+            }
+
+            // Hide the context menu
+            const contextMenu = document.getElementById("contextMenu");
+            contextMenu.style.display = "none";
+          })
+          .catch((error) => {
+            console.error("Error updating account status:", error);
+            alert("An error occurred while updating the account status.");
+          });
+      }
+
+      // Remove account action
+      function removeAccountContext() {
+        const accountId =
+          window.selectedAccountElement.getAttribute("data-account-id");
+
+        fetch("/delete_account", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ account_id: accountId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              alert(`Error: ${data.error}`);
+            } else {
+              // Remove the account card element from the DOM
+              window.selectedAccountElement.remove();
+              window.location.href = "/dashboard";
+            }
+
+            // Hide the context menu
+            const contextMenu = document.getElementById("contextMenu");
+            contextMenu.style.display = "none";
+          })
+          .catch((error) => {
+            console.error("Error deleting account:", error);
+            alert("An error occurred while deleting the account.");
+          });
+      }
+    </script>
+    <script>
+      {% for account_id, prediction in prediction_results.items() %}
+        {% if prediction.future_predictions %}
+          const ctx = document.getElementById('balance-prediction-chart-{{ account_id }}').getContext('2d');
+          const futureDates = {{ prediction.future_predictions.dates|tojson }};
+          const predictedBalances = {{ prediction.future_predictions.predicted_balances|tojson }};
+
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: futureDates,
+              datasets: [{
+                label: 'Predicted Balance',
+                data: predictedBalances,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+              }]
+            }
+          });
+        {% endif %}
+      {% endfor %}
+    </script>
+  </body>
 </html>

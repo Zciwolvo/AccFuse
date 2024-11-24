@@ -1,0 +1,10 @@
+balance_id,account_id,name,balance_type,reference_date,amount,currency,created_at
+1,1,"Closing balance",CLBD,2024-03-08,100.00,EUR,"2024-11-20 23:27:10"
+2,1,"Operational Balance",OTHR,2024-03-08,100.00,EUR,"2024-11-20 23:27:10"
+3,1,"Available balance",ITAV,2024-03-08,100.00,EUR,"2024-11-20 23:27:10"
+4,2,"Closing balance",CLBD,2024-03-08,100.00,EUR,"2024-11-20 23:27:41"
+5,2,"Operational Balance",OTHR,2024-03-08,100.00,EUR,"2024-11-20 23:27:41"
+6,2,"Available balance",ITAV,2024-03-08,100.00,EUR,"2024-11-20 23:27:41"
+7,3,"Closing balance",CLBD,2024-03-08,100.00,EUR,"2024-11-20 23:27:41"
+8,3,"Operational Balance",OTHR,2024-03-08,100.00,EUR,"2024-11-20 23:27:41"
+9,3,"Available balance",ITAV,2024-03-08,100.00,EUR,"2024-11-20 23:27:41"

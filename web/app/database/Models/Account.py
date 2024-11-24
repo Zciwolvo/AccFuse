@@ -13,6 +13,7 @@ class Account(db.Model):
     product = db.Column(db.String(50))
     currency = db.Column(db.String(3), nullable=False)
     psu_status = db.Column(db.String(10))
+    active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
     updated_at = db.Column(db.TIMESTAMP, server_default=db.func.now(), onupdate=db.func.now())
 

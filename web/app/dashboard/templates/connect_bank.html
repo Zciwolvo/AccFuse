@@ -14,32 +14,75 @@
     />
   </head>
   <body>
+    <!-- Navbar -->
+    {% include 'dashboard_navbar.html' %}
+
+    <!-- Main Content -->
     <div class="container mt-5">
-      <h2 class="text-center">Connect Your Bank Account</h2>
-      <p class="text-center">Select a bank to continue:</p>
-      <div class="d-flex justify-content-around mt-4">
-        <a
-          href="{{ url_for('dashboard.bank_login', bank='bnp_paribas') }}"
-          class="btn btn-primary"
-        >
-          BNP Paribas
-        </a>
-        <a
-          href="{{ url_for('dashboard.bank_login', bank='fintro') }}"
-          class="btn btn-primary"
-        >
-          Fintro Bank
-        </a>
-        <a
-          href="{{ url_for('dashboard.bank_login', bank='hellobank') }}"
-          class="btn btn-primary"
-        >
-          HelloBank
-        </a>
+      <div class="text-center mb-4">
+        <h2 class="mb-3">Connect Your Bank Account</h2>
+        <p class="text-muted">
+          Choose your bank to securely connect your account.
+        </p>
+      </div>
+      <div class="row justify-content-center">
+        <!-- Bank Cards -->
+        <div class="col-md-3 mb-3">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title">BNP Paribas</h5>
+              <img
+                src="{{ url_for('dashboard.static', filename='BNP_logo.png') }}"
+                alt="BNP Paribas"
+                class="img-fluid mb-3"
+              />
+              <a
+                href="{{ url_for('dashboard.bank_login', bank='bnp_paribas') }}"
+                class="btn btn-primary btn-block"
+                >Connect</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title">Fintro Bank</h5>
+              <img
+                src="{{ url_for('static', filename='images/fintro_logo.png') }}"
+                alt="Fintro Bank"
+                class="img-fluid mb-3"
+              />
+              <a
+                href="{{ url_for('dashboard.bank_login', bank='fintro') }}"
+                class="btn btn-primary btn-block"
+                >Connect</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title">HelloBank</h5>
+              <img
+                src="{{ url_for('static', filename='images/hellobank_logo.png') }}"
+                alt="HelloBank"
+                class="img-fluid mb-3"
+              />
+              <a
+                href="{{ url_for('dashboard.bank_login', bank='hellobank') }}"
+                class="btn btn-primary btn-block"
+                >Connect</a
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>
