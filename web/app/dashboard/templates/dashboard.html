@@ -42,6 +42,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script>
       // Bar Chart: Incomes and Outcomes
       const barCtx = document.getElementById('barChart').getContext('2d');
@@ -100,7 +101,7 @@
       const monthlyLabels = {{ monthly_labels | safe }};
       const combinedNetChanges = {{ monthly_net_changes | safe }};
       const combinedUtilizations = {{ monthly_utilizations | safe }};
-      const accountMonthlyData = {{ account_monthly_data | safe }}; // Per-account monthly data with names
+      const accountMonthlyData = {{ account_monthly_data | safe }};
 
       // Colors for separate accounts
       const accountColors = [
@@ -130,7 +131,7 @@
       for (const [accountName, data] of Object.entries(accountMonthlyData)) {
         netChangeDatasets.push({
           label: `${accountName} Net Change (€)`,
-          data: data.monthly_net_changes, // Data for this account
+          data: data.monthly_net_changes,
           borderColor: accountColors[colorIndex % accountColors.length],
           backgroundColor: accountColors[colorIndex % accountColors.length],
           fill: false,
@@ -298,27 +299,88 @@
       }
     </script>
     <script>
-      {% for account_id, prediction in prediction_results.items() %}
-        {% if prediction.future_predictions %}
-          const ctx = document.getElementById('balance-prediction-chart-{{ account_id }}').getContext('2d');
-          const futureDates = {{ prediction.future_predictions.dates|tojson }};
-          const predictedBalances = {{ prediction.future_predictions.predicted_balances|tojson }};
+      // Unified Chart Data Preparation
+      const summaryLabels = [];
+      const summaryData = [];
+      const accountData = {}; // Store individual account data
 
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: futureDates,
-              datasets: [{
-                label: 'Predicted Balance',
-                data: predictedBalances,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: false
-              }]
-            }
-          });
-        {% endif %}
+      {% for account_id, prediction in prediction_results.items() %}
+        if ("{{ account_id }}" === "combined") {
+          // Add combined data
+          summaryLabels.push(...{{ prediction.future_predictions.dates | tojson }});
+          summaryData.push(...{{ prediction.future_predictions.predicted_balances | tojson }});
+        } else {
+          // Add individual account data
+          accountData["{{ account_id }}"] = {
+            name: "{{ prediction.name }}",
+            dates: {{ prediction.future_predictions.dates | tojson }},
+            balances: {{ prediction.future_predictions.predicted_balances | tojson }},
+          };
+        }
       {% endfor %}
+
+      // Create unified chart with combined and individual account data
+      const ctxSummary = document.getElementById("summary-chart").getContext("2d");
+      const datasets = [
+        {
+          label: "Combined Predicted Balances",
+          data: summaryData,
+          borderColor: "rgba(75, 192, 192, 1)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          fill: true,
+          tension: 0.4,
+        },
+      ];
+
+      // Add individual accounts to the dataset
+      const accountColors2 = [
+        "rgba(255, 99, 132, 0.6)",
+        "rgba(54, 162, 235, 0.6)",
+        "rgba(255, 206, 86, 0.6)",
+        "rgba(75, 192, 192, 0.6)",
+        "rgba(153, 102, 255, 0.6)",
+      ];
+
+      let colorIndex2 = 0;
+      for (const [accountId, account] of Object.entries(accountData)) {
+        datasets.push({
+          label: `${account.name} Predicted Balances`, // Use the account's name
+          data: account.balances,
+          borderColor: accountColors2[colorIndex2 % accountColors2.length],
+          backgroundColor: accountColors2[colorIndex2 % accountColors2.length],
+          fill: false,
+          tension: 0.4,
+        });
+        colorIndex2++;
+      }
+
+      // Create the chart
+      new Chart(ctxSummary, {
+        type: "line",
+        data: {
+          labels: summaryLabels,
+          datasets: datasets,
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+            },
+          },
+          scales: {
+            x: {
+              type: "time",
+              time: {
+                unit: "day",
+              },
+            },
+            y: {
+              beginAtZero: false,
+            },
+          },
+        },
+      });
     </script>
   </body>
 </html>

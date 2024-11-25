@@ -1,14 +1,15 @@
-<!-- predictions.html -->
-<div class="container mt-4">
+<div class="container mt-4" id="predictions">
   <h1>Account Balance Predictions</h1>
 
   <!-- Prediction Filter Form -->
-  <form method="GET" action="{{ url_for('dashboard.index') }}" class="mb-4">
-    <div class="form-group row">
-      <label for="past_days" class="col-sm-2 col-form-label"
-        >Past Data (Days):</label
-      >
-      <div class="col-sm-4">
+  <form
+    method="GET"
+    action="{{ url_for('dashboard.index', _anchor='predictions') }}"
+    class="mb-4"
+  >
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="past_days" class="form-label">Past Data (Days):</label>
         <input
           type="number"
           id="past_days"
@@ -19,13 +20,10 @@
           class="form-control"
         />
       </div>
-    </div>
-
-    <div class="form-group row">
-      <label for="future_days" class="col-sm-2 col-form-label"
-        >Future Predictions (Days):</label
-      >
-      <div class="col-sm-4">
+      <div class="col-md-6">
+        <label for="future_days" class="form-label"
+          >Future Predictions (Days):</label
+        >
         <input
           type="number"
           id="future_days"
@@ -37,48 +35,14 @@
         />
       </div>
     </div>
-
     <button type="submit" class="btn btn-primary">Apply Filters</button>
   </form>
 
   {% if prediction_results %}
-  <h3>Predicted Account Balance Changes</h3>
+  <h3>Accounts Balance Predictions</h3>
+  <canvas id="summary-chart" class="mb-5"></canvas>
 
-  <!-- Loop through prediction results for all accounts -->
-  {% for account_id, prediction in prediction_results.items() %} {% if
-  prediction.recurring_payments or prediction.balance_trend or
-  prediction.future_predictions %}
-  <div class="card mb-4">
-    <div class="card-header">
-      <h4>Account ID: {{ account_id }}</h4>
-    </div>
-    <div class="card-body">
-      {% if prediction.recurring_payments %}
-      <h5>Recurring Payments:</h5>
-      <ul class="list-group mb-3">
-        {% for payment in prediction.recurring_payments %}
-        <li class="list-group-item">
-          <strong>{{ payment.narrative }}</strong> - Interval: {{
-          payment.median_interval_days }} days, Avg. Amount: {{
-          payment.average_amount }}
-        </li>
-        {% endfor %}
-      </ul>
-      {% endif %} {% if prediction.balance_trend %}
-      <h5>Balance Trend:</h5>
-      <p>Overall trend: {{ prediction.balance_trend.overall_trend }}</p>
-      <p>
-        Average Daily Change: {{ prediction.balance_trend.average_daily_change
-        }}
-      </p>
-      <p>Standard Deviation: {{ prediction.balance_trend.std_dev_change }}</p>
-      {% endif %} {% if prediction.future_predictions %}
-      <h5>Future Balance Predictions:</h5>
-      <canvas id="balance-prediction-chart-{{ account_id }}"></canvas>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %} {% endfor %} {% else %}
+  {% else %}
   <p>No prediction data available.</p>
   {% endif %}
 </div>

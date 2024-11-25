@@ -7,7 +7,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from .BankController import BANK_CONFIGURATIONS, initialize_bank_api, authenticate_user, combine_data, save_to_database, delete_account, update_account_status_in_db, analyze_and_predict_account
 from datetime import datetime
 from sqlalchemy.sql import func
-import json
+from collections import defaultdict
 
 
 @dashboard.route('/dashboard', methods=['GET', 'POST'])
@@ -59,12 +59,48 @@ def index():
     past_days = request.args.get('past_days', 365, type=int)
     future_days = request.args.get('future_days', 30, type=int)
 
+    # Initialize combined summary
+    combined_data = {
+        "future_predictions": {
+            "dates": [],
+            "predicted_balances": []
+        }
+    }
+
+    # Collect data for combination
+    combined_dates = set()
+    combined_balances = defaultdict(float)
+
     for account in active_accounts:
-        prediction_results[account.account_id] = analyze_and_predict_account(account.account_id, past_days, future_days)
-        if not prediction_results[account.account_id]:
-            del prediction_results[account.account_id]
+        prediction = analyze_and_predict_account(account.account_id, past_days, future_days)
+        if prediction:
+            # Find the corresponding user account by account_id
+            matching_account = next(
+                (user_account for user_account in user_accounts if user_account.account_id == prediction["account_id"]),
+                None
+            )
+            if matching_account:
+                prediction["name"] = matching_account.name
+            else:
+                prediction["name"] = f"Account {prediction['account_id']}"
+            
+            prediction_results[account.account_id] = prediction 
+            
+            # Collect combined data
+            dates = prediction["future_predictions"]["dates"]
+            balances = prediction["future_predictions"]["predicted_balances"]
+            for date, balance in zip(dates, balances):
+                combined_dates.add(date)
+                combined_balances[date] += balance
 
-
+    # Prepare combined summary for chart
+    if combined_balances:
+        sorted_combined_dates = sorted(combined_dates)  # Sort dates
+        combined_data["future_predictions"]["dates"] = sorted_combined_dates
+        combined_data["future_predictions"]["predicted_balances"] = [
+            combined_balances[date] for date in sorted_combined_dates
+        ]
+        prediction_results["combined"] = combined_data
     return render_template(
         'dashboard.html',
         has_accounts=bool(user_accounts),
