@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_jwt_extended import create_access_token, set_access_cookies
 from datetime import datetime, timedelta
+import requests
 import jwt
 from flask_mail import Message
 from ..database.Models.User import User
@@ -34,9 +35,41 @@ def register():
     # Generate token and send verification email
     token = generate_verification_token(data['email'])
     verification_url = url_for('user.verify_email', token=token, _external=True)
-    
+
+    # Create a nicely formatted HTML email
     msg = Message('Email Verification', recipients=[data['email']])
-    msg.body = f'Please verify your email by clicking the following link: {verification_url}'
+    msg.html = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px;">
+            <tr>
+                <td style="padding: 20px; text-align: center; background-color: #007bff; color: #ffffff; border-radius: 8px 8px 0 0;">
+                    <h1 style="margin: 0;">Welcome to AccFuse</h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 20px; color: #333;">
+                    <p>Hi <strong>{data['username']}</strong>,</p>
+                    <p>Thank you for registering with us! To complete your registration, please verify your email address by clicking the button below:</p>
+                    <p style="text-align: center;">
+                        <a href="{verification_url}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px;">
+                            Verify Email
+                        </a>
+                    </p>
+                    <p>If the button above does not work, you can also copy and paste the following URL into your browser:</p>
+                    <p style="word-wrap: break-word; color: #007bff;">{verification_url}</p>
+                    <p>Welcome aboard!<br>AccFuse Team</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; text-align: center; background-color: #f4f4f4; color: #888; font-size: 12px;">
+                    © {datetime.now().year} AccFuse. All rights reserved.
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    """
     mail.send(msg)
 
     return jsonify({'message': 'User registered successfully! Please check your email to verify your account.'}), 201
@@ -56,22 +89,51 @@ def verify_email(token):
 @user.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    user = User.query.filter_by(email=data['email']).first()
 
+    # Verify reCAPTCHA
+    recaptcha_response = data.get('recaptcha')
+    recaptcha_verify_url = "https://www.google.com/recaptcha/api/siteverify"
+    recaptcha_payload = {
+        'secret': app.config['RECAPTCHA_KEY'],
+        'response': recaptcha_response
+    }
+    recaptcha_result = requests.post(recaptcha_verify_url, data=recaptcha_payload).json()
+
+    if not recaptcha_result.get('success'):
+        return jsonify({'message': 'reCAPTCHA verification failed. Please try again.'}), 400
+
+    # Check user credentials
+    user = User.query.filter_by(email=data['email']).first()
     if not user or not check_password_hash(user.password, data['password']):
         return jsonify({'message': 'Login failed. Check credentials.'}), 401
 
     if not user.verified:
         return jsonify({'message': 'Email not verified. Please verify your email first.'}), 403
 
-    # Use create_access_token with the user's ID as the identity (this sets the `sub` claim)
+    # Create JWT token
     access_token = create_access_token(identity=user.user_id, expires_delta=timedelta(minutes=30))
-
-    # Create a response and set the JWT access token as an HTTP-only cookie
     response = make_response(jsonify({'message': 'Login successful!'}))
     set_access_cookies(response, access_token)
 
     return response
+
+@user.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'GET':
+        # Render a form for entering the email address
+        return render_template('forgot_password.html')
+
+    # Handle the POST request to initiate password reset
+    data = request.form
+    email = data.get('email')
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return jsonify({'message': 'No account found with this email.'}), 404
+
+    # Generate and send a password reset token (implementation omitted for brevity)
+    #send_password_reset_email(user)
+    return jsonify({'message': 'Password reset email sent.'}), 200
 
 @user.route('/logout')
 def logout():

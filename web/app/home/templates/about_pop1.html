@@ -7,10 +7,13 @@
   aria-labelledby="largeTextImageModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
+      <!-- Modal Header -->
       <div class="modal-header">
-        <h5 class="modal-title" id="largeTextImageModalLabel">Modal Title</h5>
+        <h5 class="modal-title" id="largeTextImageModalLabel">
+          Spending Trends & Distribution of Funds
+        </h5>
         <button
           type="button"
           class="close"
@@ -20,39 +23,46 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body d-flex">
-        <!-- Text Block on the Left -->
-        <div class="col-6 p-3">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            feugiat fermentum libero, ac facilisis nulla convallis non. Nullam
-            cursus velit a ante congue, ac congue odio sollicitudin. Morbi nec
-            est urna. Vivamus lacinia diam id diam vestibulum vehicula.
-            Vestibulum in suscipit enim. Fusce aliquam neque sit amet dui
-            efficitur, sed auctor libero elementum. Integer malesuada mi sit
-            amet purus sagittis, et porta metus bibendum. Praesent ut lectus
-            sapien. Suspendisse potenti. Nullam vehicula, leo a sollicitudin
-            venenatis, purus ex finibus enim, et tincidunt purus odio ac erat.
-            Vivamus fringilla pharetra dui a lobortis. Sed egestas tincidunt
-            sapien, vel vestibulum tortor ornare et. Nam ut semper nunc, ut
-            blandit felis. Nullam pretium mauris ut velit feugiat posuere.
-          </p>
-          <p>
-            Suspendisse potenti. Nullam vehicula, leo a sollicitudin venenatis,
-            purus ex finibus enim, et tincidunt purus odio ac erat. Vivamus
-            fringilla pharetra dui a lobortis. Sed egestas tincidunt sapien, vel
-            vestibulum tortor ornare et. Nam ut semper nunc, ut blandit felis.
-            Nullam pretium mauris ut velit feugiat posuere.
-          </p>
-        </div>
-        <!-- Image on the Right -->
-        <div class="col-6 p-0">
-          <img
-            src="https://via.placeholder.com/500"
-            alt="Placeholder Image"
-            class="img-fluid h-100"
-            style="object-fit: cover"
-          />
+      <!-- Modal Body -->
+      <div class="modal-body p-4">
+        <div class="container">
+          <div class="row">
+            <!-- Top-Left: Text Description -->
+            <div class="col-md-5 d-flex align-items-center">
+              <div>
+                <h1>
+                  Discover your spending trends and how your funds are
+                  distributed across accounts. Track patterns and optimize your
+                  financial decisions with visual insights.
+                </h1>
+              </div>
+            </div>
+            <!-- Top-Right: Square Image -->
+            <div class="col-md-5">
+              <img
+                src="{{ url_for('static', filename='src/DoF_text.png') }}"
+                alt="Sample Square Image"
+                class="img-fluid shadow"
+                style="
+                  border-radius: 8px;
+                  object-fit: cover;
+                  height: 100%;
+                  width: 100%;
+                "
+              />
+            </div>
+          </div>
+          <div class="row mt-4">
+            <!-- Bottom Row: Wide Image -->
+            <div class="col-10">
+              <img
+                src="{{ url_for('static', filename='src/DoF_wide.png') }}"
+                alt="Spending Trends Overview"
+                class="img-fluid shadow"
+                style="border-radius: 8px; object-fit: contain; width: 100%"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

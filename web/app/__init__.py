@@ -1,10 +1,12 @@
 # app/__init__.py
-from flask import Flask, redirect
+from flask import Flask, render_template, jsonify
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 mail = Mail()
 jwt = JWTManager()
+cors = CORS()
 
 
 def create_app():
@@ -26,6 +28,8 @@ def create_app():
     app.config['JWT_COOKIE_SECURE'] = False
     app.config['JWT_ACCESS_COOKIE_NAME'] = "token"
     
+    app.config['RECAPTCHA_KEY'] = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+    
     # Register blueprints
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
@@ -40,7 +44,7 @@ def create_app():
     app.register_blueprint(contact_blueprint)
     
     from .dashboard import dashboard as dashboard_blueprint
-    app.register_blueprint(dashboard_blueprint)
+    app.register_blueprint(dashboard_blueprint, url_prefix="/dashboard")
     
     from .help import help_page as help_page_blueprint
     app.register_blueprint(help_page_blueprint)
@@ -51,11 +55,13 @@ def create_app():
     # Initialize extensions
     mail.init_app(app)
     jwt.init_app(app)
+    cors.init_app(app)
     
     from .user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix="/user")
     
-    from .BankAPI import account as account_blueprint
-    app.register_blueprint(account_blueprint, url_prefix="/account")
-        
+    
+    #Error handling
+    
+
     return app

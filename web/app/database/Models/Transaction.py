@@ -4,7 +4,7 @@ class Transaction(db.Model):
     __tablename__ = 'transactions'
     transaction_id = db.Column(db.Integer, primary_key=True)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.account_id'), nullable=False)
-    resource_id = db.Column(db.Integer, unique=True, nullable=False)
+    resource_id = db.Column(db.Integer, nullable=False)
     entry_reference = db.Column(db.String(30))
     amount = db.Column(db.Numeric(15, 2))
     currency = db.Column(db.String(3), nullable=False)

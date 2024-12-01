@@ -46,3 +46,89 @@
   <p>No prediction data available.</p>
   {% endif %}
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Unified Chart Data Preparation
+    const summaryLabels = [];
+    const summaryData = [];
+    const accountData = {}; // Store individual account data
+
+    {% for account_id, prediction in prediction_results.items() %}
+      if ("{{ account_id }}" === "combined") {
+        // Add combined data
+        summaryLabels.push(...{{ prediction.future_predictions.dates | tojson }});
+        summaryData.push(...{{ prediction.future_predictions.predicted_balances | tojson }});
+      } else {
+        // Add individual account data
+        accountData["{{ account_id }}"] = {
+          name: "{{ prediction.name }}",
+          dates: {{ prediction.future_predictions.dates | tojson }},
+          balances: {{ prediction.future_predictions.predicted_balances | tojson }},
+        };
+      }
+    {% endfor %}
+
+    // Create unified chart with combined and individual account data
+    const ctxSummary = document.getElementById("summary-chart").getContext("2d");
+    const datasets = [
+      {
+        label: "Combined Predicted Balances",
+        data: summaryData,
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        fill: true,
+        tension: 0.4,
+      },
+    ];
+
+    // Add individual accounts to the dataset
+    const accountColors2 = [
+      "rgba(255, 99, 132, 0.6)",
+      "rgba(54, 162, 235, 0.6)",
+      "rgba(255, 206, 86, 0.6)",
+      "rgba(75, 192, 192, 0.6)",
+      "rgba(153, 102, 255, 0.6)",
+    ];
+
+    let colorIndex2 = 0;
+    for (const [accountId, account] of Object.entries(accountData)) {
+      datasets.push({
+        label: `${account.name} Predicted Balances`, // Use the account's name
+        data: account.balances,
+        borderColor: accountColors2[colorIndex2 % accountColors2.length],
+        backgroundColor: accountColors2[colorIndex2 % accountColors2.length],
+        fill: false,
+        tension: 0.4,
+      });
+      colorIndex2++;
+    }
+
+    // Create the chart
+    new Chart(ctxSummary, {
+      type: "line",
+      data: {
+        labels: summaryLabels,
+        datasets: datasets,
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+        scales: {
+          x: {
+            type: "time",
+            time: {
+              unit: "day",
+            },
+          },
+          y: {
+            beginAtZero: false,
+          },
+        },
+      },
+    });
+  });
+</script>

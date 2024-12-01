@@ -47,3 +47,105 @@
     </tbody>
   </table>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  // Data Preparation: Month-by-Month Net Balance Change
+  const monthlyLabels = {{ monthly_labels | safe }};
+  const combinedNetChanges = {{ monthly_net_changes | safe }};
+  const combinedUtilizations = {{ monthly_utilizations | safe }};
+  const accountMonthlyData = {{ account_monthly_data | safe }};
+
+  // Colors for separate accounts
+  const accountColors = [
+    'rgba(255, 99, 132, 0.6)',
+    'rgba(54, 162, 235, 0.6)',
+    'rgba(255, 206, 86, 0.6)',
+    'rgba(75, 192, 192, 0.6)',
+    'rgba(153, 102, 255, 0.6)',
+  ];
+
+  // Net Balance Change Chart
+  const monthlyNetChangeCtx = document
+    .getElementById('monthlyNetChangeChart')
+    .getContext('2d');
+
+  const netChangeDatasets = [
+    {
+      label: 'Combined Net Balance Change (€)',
+      data: combinedNetChanges,
+      borderColor: 'rgba(75, 192, 192, 1)',
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      fill: true,
+    },
+  ];
+
+  let colorIndex = 0;
+  for (const [accountName, data] of Object.entries(accountMonthlyData)) {
+    netChangeDatasets.push({
+      label: `${accountName} Net Change (€)`,
+      data: data.monthly_net_changes,
+      borderColor: accountColors[colorIndex % accountColors.length],
+      backgroundColor: accountColors[colorIndex % accountColors.length],
+      fill: false,
+    });
+    colorIndex++;
+  }
+
+  new Chart(monthlyNetChangeCtx, {
+    type: 'line',
+    data: {
+      labels: monthlyLabels,
+      datasets: netChangeDatasets,
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+  // Account Utilization Chart
+  const monthlyUtilizationCtx = document
+    .getElementById('monthlyUtilizationChart')
+    .getContext('2d');
+
+  const utilizationDatasets = [
+    {
+      label: 'Combined Transaction Volume',
+      data: combinedUtilizations,
+      backgroundColor: 'rgba(255, 159, 64, 0.6)',
+      borderColor: 'rgba(255, 159, 64, 1)',
+      borderWidth: 1,
+    },
+  ];
+
+  colorIndex = 0;
+  for (const [accountName, data] of Object.entries(accountMonthlyData)) {
+    utilizationDatasets.push({
+      label: `${accountName} Transactions`,
+      data: data.monthly_utilizations, // Data for this account
+      backgroundColor: accountColors[colorIndex % accountColors.length],
+      borderColor: accountColors[colorIndex % accountColors.length],
+      borderWidth: 1,
+    });
+    colorIndex++;
+  }
+
+  new Chart(monthlyUtilizationCtx, {
+    type: 'bar',
+    data: {
+      labels: monthlyLabels,
+      datasets: utilizationDatasets,
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+})
+</script>

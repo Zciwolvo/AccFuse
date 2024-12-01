@@ -10,7 +10,7 @@ from sqlalchemy.sql import func
 from collections import defaultdict
 
 
-@dashboard.route('/dashboard', methods=['GET', 'POST'])
+@dashboard.route('/', methods=['GET', 'POST'])
 @jwt_required()
 def index():
     user_id = get_jwt_identity()
@@ -425,7 +425,7 @@ def bank_login(bank):
 
 
 
-@dashboard.route('/dashboard/redirect', methods=['GET'])
+@dashboard.route('/redirect', methods=['GET'])
 @jwt_required()
 def handle_redirect():
     """Handle redirect from the bank after authorization."""

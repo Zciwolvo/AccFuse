@@ -80,3 +80,104 @@
     background-color: #f1f1f1;
   }
 </style>
+
+<script>
+  // Function to show the context menu
+  function showContextMenu(event, cardElement) {
+    event.preventDefault(); // Prevent the default context menu from appearing
+
+    // Position the custom context menu near the mouse cursor
+    const contextMenu = document.getElementById("contextMenu");
+    contextMenu.style.display = "block";
+    contextMenu.style.left = `${event.pageX}px`;
+    contextMenu.style.top = `${event.pageY}px`;
+
+    // Store the selected account's element for further actions
+    window.selectedAccountElement = cardElement;
+  }
+
+  // Hide context menu when clicking anywhere else
+  document.addEventListener("click", () => {
+    const contextMenu = document.getElementById("contextMenu");
+    contextMenu.style.display = "none";
+  });
+
+  // Reload data action
+  function reloadData() {
+    window.location.href = "/dashboard/connect_bank";
+  }
+
+  // Toggle account active status
+  function toggleAccountContext() {
+    const accountId =
+      window.selectedAccountElement.getAttribute("data-account-id");
+    const card = window.selectedAccountElement.querySelector(".account-card");
+
+    // Determine the new status
+    const isCurrentlyDisabled = card.classList.contains("disabled");
+    const newStatus = isCurrentlyDisabled; // Flip the current status
+
+    // Make an AJAX request to update the account status in the database
+    fetch("/dashboard/update_account_status", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ account_id: accountId, active: !newStatus }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          alert(`Error: ${data.error}`);
+        } else {
+          // Update the UI based on the new status
+          if (!newStatus) {
+            card.classList.remove("disabled");
+          } else {
+            card.classList.add("disabled");
+          }
+          window.location.href = "/dashboard";
+        }
+
+        // Hide the context menu
+        const contextMenu = document.getElementById("contextMenu");
+        contextMenu.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Error updating account status:", error);
+        alert("An error occurred while updating the account status.");
+      });
+  }
+
+  // Remove account action
+  function removeAccountContext() {
+    const accountId =
+      window.selectedAccountElement.getAttribute("data-account-id");
+
+    fetch("/dashboard/delete_account", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ account_id: accountId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          alert(`Error: ${data.error}`);
+        } else {
+          // Remove the account card element from the DOM
+          window.selectedAccountElement.remove();
+          window.location.href = "/dashboard";
+        }
+
+        // Hide the context menu
+        const contextMenu = document.getElementById("contextMenu");
+        contextMenu.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Error deleting account:", error);
+        alert("An error occurred while deleting the account.");
+      });
+  }
+</script>

@@ -1,11 +1,13 @@
-{% include 'about_pop1.html' %}
+{% include 'about_pop1.html' %} {% include 'about_pop2.html' %} {% include
+'about_pop3.html' %} {% include 'about_pop4.html' %}
 <section class="py-5">
   <div class="container text-center" style="max-width: 1440px">
     <!-- Title and Subtitle -->
-    <h2 class="font-weight-bold text-dark mb-3">Your Best Value Proposition</h2>
+    <h2 class="font-weight-bold text-dark mb-3">Unlock Insights That Matter</h2>
     <p class="text-muted mb-5">
-      "If you don't try this app, you won't become the superhero you were meant
-      to be"
+      Discover the powerful analytics that bring clarity to your financial
+      journey. From tracking cash flow to predicting future balances, we help
+      you stay in control.
     </p>
 
     <!-- Feature Boxes -->
@@ -23,13 +25,13 @@
               style="height: 20em; background-color: #f8f9fa"
             >
               <img
-                src="https://via.placeholder.com/100"
+                src="{{ url_for('static', filename='src/DoF.png') }}"
                 alt="Special Feature 1"
                 class="img-fluid"
               />
             </div>
             <div class="py-3">
-              <h5 class="mb-1">Special Feature</h5>
+              <h5 class="mb-1">Trends & Funds</h5>
               <p class="text-muted mb-0">See More ></p>
             </div>
           </div>
@@ -40,7 +42,7 @@
       <div
         class="col-lg-3 col-md-6 mb-4"
         data-toggle="modal"
-        data-target="#largeTextImageModal"
+        data-target="#accountPerformanceModal"
       >
         <a class="text-decoration-none" style="color: inherit">
           <div class="border border-dark" style="cursor: pointer">
@@ -49,13 +51,13 @@
               style="height: 20em; background-color: #f8f9fa"
             >
               <img
-                src="https://via.placeholder.com/100"
+                src="{{ url_for('static', filename='src/perf_mini.png') }}"
                 alt="Special Feature 2"
                 class="img-fluid"
               />
             </div>
             <div class="py-3">
-              <h5 class="mb-1">Special Feature</h5>
+              <h5 class="mb-1">Account Performance</h5>
               <p class="text-muted mb-0">See More ></p>
             </div>
           </div>
@@ -66,7 +68,7 @@
       <div
         class="col-lg-3 col-md-6 mb-4"
         data-toggle="modal"
-        data-target="#largeTextImageModal"
+        data-target="#monthlyTransactionModal"
       >
         <a class="text-decoration-none" style="color: inherit">
           <div class="border border-dark" style="cursor: pointer">
@@ -75,13 +77,13 @@
               style="height: 20em; background-color: #f8f9fa"
             >
               <img
-                src="https://via.placeholder.com/100"
+                src="{{ url_for('static', filename='src/tflow_mini.png') }}"
                 alt="Special Feature 3"
                 class="img-fluid"
               />
             </div>
             <div class="py-3">
-              <h5 class="mb-1">Special Feature</h5>
+              <h5 class="mb-1">Transactions Flow</h5>
               <p class="text-muted mb-0">See More ></p>
             </div>
           </div>
@@ -92,7 +94,7 @@
       <div
         class="col-lg-3 col-md-6 mb-4"
         data-toggle="modal"
-        data-target="#largeTextImageModal"
+        data-target="#futureBalanceModal"
       >
         <a class="text-decoration-none" style="color: inherit">
           <div class="border border-dark" style="cursor: pointer">
@@ -101,13 +103,13 @@
               style="height: 20em; background-color: #f8f9fa"
             >
               <img
-                src="https://via.placeholder.com/100"
+                src="{{ url_for('static', filename='src/pred_mini.png') }}"
                 alt="Special Feature 4"
                 class="img-fluid"
               />
             </div>
             <div class="py-3">
-              <h5 class="mb-1">Special Feature</h5>
+              <h5 class="mb-1">Financial Predictions</h5>
               <p class="text-muted mb-0">See More ></p>
             </div>
           </div>

@@ -31,11 +31,7 @@
           <div class="card shadow-sm">
             <div class="card-body text-center">
               <h5 class="card-title">BNP Paribas</h5>
-              <img
-                src="{{ url_for('dashboard.static', filename='BNP_logo.png') }}"
-                alt="BNP Paribas"
-                class="img-fluid mb-3"
-              />
+
               <a
                 href="{{ url_for('dashboard.bank_login', bank='bnp_paribas') }}"
                 class="btn btn-primary btn-block"
@@ -48,11 +44,7 @@
           <div class="card shadow-sm">
             <div class="card-body text-center">
               <h5 class="card-title">Fintro Bank</h5>
-              <img
-                src="{{ url_for('static', filename='images/fintro_logo.png') }}"
-                alt="Fintro Bank"
-                class="img-fluid mb-3"
-              />
+
               <a
                 href="{{ url_for('dashboard.bank_login', bank='fintro') }}"
                 class="btn btn-primary btn-block"
@@ -65,11 +57,7 @@
           <div class="card shadow-sm">
             <div class="card-body text-center">
               <h5 class="card-title">HelloBank</h5>
-              <img
-                src="{{ url_for('static', filename='images/hellobank_logo.png') }}"
-                alt="HelloBank"
-                class="img-fluid mb-3"
-              />
+
               <a
                 href="{{ url_for('dashboard.bank_login', bank='hellobank') }}"
                 class="btn btn-primary btn-block"

@@ -3,7 +3,7 @@ import random
 from datetime import datetime, timedelta
 
 # Function to generate realistic transaction data
-def generate_transactions(account_id, start_date, end_date, num_transactions=200):
+def generate_transactions(account_id, start_date, end_date, num_transactions=500):
     transaction_data = []
     current_date = start_date
 
@@ -15,7 +15,6 @@ def generate_transactions(account_id, start_date, end_date, num_transactions=200
             "entry_reference": f"REF-{random.randint(1000, 9999)}",
             "amount": round(random.uniform(-500, 500), 2),  # Random amounts
             "currency": "EUR",
-            "credit_debit_indicator": random.choice(["CRDT", "DBIT"]),
             "status": random.choice(["BOOKED", "PENDING"]),
             "booking_date": current_date.strftime("%Y-%m-%d"),
             "value_date": (current_date + timedelta(days=random.randint(0, 2))).strftime("%Y-%m-%d"),
@@ -32,6 +31,10 @@ def generate_transactions(account_id, start_date, end_date, num_transactions=200
             ]),
             "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
+        if transaction["amount"] > 0:
+            transaction["credit_debit_indicator"] = "CRDT"
+        else:
+            transaction["credit_debit_indicator"] = "DBIT"
         transaction_data.append(transaction)
         current_date += timedelta(days=random.randint(1, 5))  # Add random days for next transaction
 

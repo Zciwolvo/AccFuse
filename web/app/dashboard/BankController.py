@@ -98,7 +98,7 @@ def save_to_database(user_id, state, account_data, transactions, balances):
         ):
             # Check if account with the same resource_id already exists
             account = db.session.query(Account).filter_by(
-                resource_id=account_info['resourceId']
+                resource_id=account_info['resourceId'], user_id=user_id
             ).first()
 
             if account:
@@ -291,6 +291,8 @@ def analyze_and_predict_account(account_id, past_days=365, future_days=30):
         transaction_df["date"] = pd.to_datetime(transaction_df["date"], errors='coerce')
         transaction_df.dropna(subset=["date"], inplace=True)
         transaction_df.sort_values("date", inplace=True)
+    else:
+        return {}
 
     # Identify recurring payments
     recurring_payments = identify_recurring_payments(transaction_df)
