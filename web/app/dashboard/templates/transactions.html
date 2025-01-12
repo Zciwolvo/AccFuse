@@ -1,58 +1,118 @@
+
 <div class="card" id="transactions">
   <div class="card-header bg-secondary text-white">Recent Transactions</div>
   <div class="card-body">
+    <!-- Filters Section -->
     <div class="card mb-4">
       <div class="card-header">Transaction Filters</div>
       <div class="card-body">
-        <form method="GET" action="{{ url_for('dashboard.index', _anchor='transactions') }}" id="filter-form">
-          <div>
-              <label for="min_amount">Min Amount (€):</label>
-              <input type="number" step="0.01" id="min_amount" name="min_amount" value="{{ request.args.get('min_amount', '') }}">
-          </div>
-          <div>
-              <label for="max_amount">Max Amount (€):</label>
-              <input type="number" step="0.01" id="max_amount" name="max_amount" value="{{ request.args.get('max_amount', '') }}">
-          </div>
-          <div>
-              <label for="start_date">Start Date:</label>
-              <input type="date" id="start_date" name="start_date" value="{{ request.args.get('start_date', '') }}">
-          </div>
-          <div>
-              <label for="end_date">End Date:</label>
-              <input type="date" id="end_date" name="end_date" value="{{ request.args.get('end_date', '') }}">
-          </div>
-          <div>
-              <label for="transaction_type">Transaction Type:</label>
-              <select id="transaction_type" name="transaction_type">
-                  <option value="" {% if not request.args.get('transaction_type') %}selected{% endif %}>All</option>
-                  <option value="CRDT" {% if request.args.get('transaction_type') == 'CRDT' %}selected{% endif %}>Credit</option>
-                  <option value="DBIT" {% if request.args.get('transaction_type') == 'DBIT' %}selected{% endif %}>Debit</option>
+        <form
+          method="GET"
+          action="{{ url_for('dashboard.index', _anchor='transactions') }}"
+          id="filter-form"
+        >
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="min_amount" class="form-label">Min Amount (€):</label>
+              <input
+                type="number"
+                step="0.01"
+                id="min_amount"
+                name="min_amount"
+                class="form-control"
+                value="{{ request.args.get('min_amount', '') }}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="max_amount" class="form-label">Max Amount (€):</label>
+              <input
+                type="number"
+                step="0.01"
+                id="max_amount"
+                name="max_amount"
+                class="form-control"
+                value="{{ request.args.get('max_amount', '') }}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="start_date" class="form-label">Start Date:</label>
+              <input
+                type="date"
+                id="start_date"
+                name="start_date"
+                class="form-control"
+                value="{{ request.args.get('start_date', '') }}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="end_date" class="form-label">End Date:</label>
+              <input
+                type="date"
+                id="end_date"
+                name="end_date"
+                class="form-control"
+                value="{{ request.args.get('end_date', '') }}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="transaction_type" class="form-label">Transaction Type:</label>
+              <select
+                id="transaction_type"
+                name="transaction_type"
+                class="form-select"
+              >
+                <option value="" {% if not request.args.get('transaction_type') %}selected{% endif %}>All</option>
+                <option value="CRDT" {% if request.args.get('transaction_type') == 'CRDT' %}selected{% endif %}>Credit</option>
+                <option value="DBIT" {% if request.args.get('transaction_type') == 'DBIT' %}selected{% endif %}>Debit</option>
               </select>
+            </div>
+            <div class="col-md-6">
+              <label for="iban" class="form-label">IBAN:</label>
+              <input
+                type="text"
+                id="iban"
+                name="iban"
+                class="form-control"
+                value="{{ request.args.get('iban', '') }}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="description" class="form-label">Description Phrase:</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                class="form-control"
+                value="{{ request.args.get('description', '') }}"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="account_name" class="form-label">Account Name:</label>
+              <input
+                type="text"
+                id="account_name"
+                name="account_name"
+                class="form-control"
+                value="{{ request.args.get('account_name', '') }}"
+              />
+            </div>
           </div>
-          <div>
-              <label for="iban">IBAN:</label>
-              <input type="text" id="iban" name="iban" value="{{ request.args.get('iban', '') }}">
+          <div class="mt-3">
+            <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
           </div>
-          <div>
-              <label for="description">Description Phrase:</label>
-              <input type="text" id="description" name="description" value="{{ request.args.get('description', '') }}">
-          </div>
-          <div>
-              <label for="account_name">Account Name:</label>
-              <input type="text" id="account_name" name="account_name" value="{{ request.args.get('account_name', '') }}">
-          </div>
-          <button type="submit">Apply Filters</button>
         </form>
       </div>
     </div>
+
+    <!-- Transactions Table -->
     <table class="table table-hover" id="transactions-table">
-      <thead>
+      <thead class="table-dark">
         <tr>
-          <th>Date</th>
-          <th>Account</th>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Type</th>
+          <th data-sort="date">Date</th>
+          <th data-sort="account">Account</th>
+          <th data-sort="description">Description</th>
+          <th data-sort="amount">Amount</th>
+          <th data-sort="type">Type</th>
         </tr>
       </thead>
       <tbody id="transactions-body">
@@ -67,42 +127,37 @@
         {% endfor %}
       </tbody>
     </table>
+
+    <!-- Pagination -->
     <nav>
-      <ul class="pagination justify-content-center" id="pagination-controls">
-        <!-- Pagination controls will be dynamically added here -->
-      </ul>
+      <ul class="pagination justify-content-center" id="pagination-controls"></ul>
     </nav>
   </div>
 </div>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const rowsPerPage = 20; // Number of rows per page
+    const rowsPerPage = 20; // Rows per page for pagination
     const tableBody = document.getElementById("transactions-body");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const paginationControls = document.getElementById(
-      "pagination-controls"
-    );
-
+    const paginationControls = document.getElementById("pagination-controls");
+    const originalOrder = [...rows]; // Save the original order of rows
     let currentPage = 1;
     const totalPages = Math.ceil(rows.length / rowsPerPage);
+    const sortState = {}; // Tracks the sort state for each column
 
-    // Function to render table rows for the current page
     function renderTable(page) {
-      tableBody.innerHTML = ""; // Clear table body
+      tableBody.innerHTML = "";
       const start = (page - 1) * rowsPerPage;
       const end = start + rowsPerPage;
       rows.slice(start, end).forEach((row) => tableBody.appendChild(row));
     }
 
-    // Function to render pagination controls
     function renderPagination() {
-      paginationControls.innerHTML = ""; // Clear pagination controls
+      paginationControls.innerHTML = "";
 
-      // Previous button
       const prevButton = document.createElement("li");
-      prevButton.className = `page-item ${
-        currentPage === 1 ? "disabled" : ""
-      }`;
+      prevButton.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
       prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
       prevButton.addEventListener("click", function (e) {
         e.preventDefault();
@@ -113,12 +168,9 @@
       });
       paginationControls.appendChild(prevButton);
 
-      // Page buttons
       for (let i = 1; i <= totalPages; i++) {
         const pageButton = document.createElement("li");
-        pageButton.className = `page-item ${
-          i === currentPage ? "active" : ""
-        }`;
+        pageButton.className = `page-item ${i === currentPage ? "active" : ""}`;
         pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
         pageButton.addEventListener("click", function (e) {
           e.preventDefault();
@@ -128,11 +180,8 @@
         paginationControls.appendChild(pageButton);
       }
 
-      // Next button
       const nextButton = document.createElement("li");
-      nextButton.className = `page-item ${
-        currentPage === totalPages ? "disabled" : ""
-      }`;
+      nextButton.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
       nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
       nextButton.addEventListener("click", function (e) {
         e.preventDefault();
@@ -144,13 +193,59 @@
       paginationControls.appendChild(nextButton);
     }
 
-    // Update the table and pagination
     function updateTableAndPagination() {
       renderTable(currentPage);
       renderPagination();
     }
 
-    // Initialize the table and pagination
+    function parseAmount(value) {
+      // Remove currency and parse to a number
+      return parseFloat(value.replace(/[^\d.-]/g, ""));
+    }
+
+    document.querySelectorAll("#transactions-table th").forEach((header, index) => {
+      header.style.cursor = "pointer";
+
+      header.addEventListener("click", () => {
+        const column = index;
+        sortState[column] = (sortState[column] || 0) + 1;
+
+        if (sortState[column] === 1) {
+          // Ascending sort
+          rows.sort((a, b) => {
+            const aText = a.children[column].innerText.trim();
+            const bText = b.children[column].innerText.trim();
+            if (column === 3) { // Amount column
+              return parseAmount(aText) - parseAmount(bText);
+            }
+            return isNaN(aText - bText) ? aText.localeCompare(bText) : aText - bText;
+          });
+        } else if (sortState[column] === 2) {
+          // Descending sort
+          rows.sort((a, b) => {
+            const aText = a.children[column].innerText.trim();
+            const bText = b.children[column].innerText.trim();
+            if (column === 3) { // Amount column
+              return parseAmount(bText) - parseAmount(aText);
+            }
+            return isNaN(aText - bText) ? bText.localeCompare(aText) : bText - aText;
+          });
+        } else {
+          // Restore original order
+          sortState[column] = 0;
+          rows.splice(0, rows.length, ...originalOrder);
+        }
+
+        // Reset sort states for other columns
+        Object.keys(sortState).forEach((key) => {
+          if (parseInt(key) !== column) sortState[key] = 0;
+        });
+
+        updateTableAndPagination();
+      });
+    });
+
     updateTableAndPagination();
   });
 </script>
+

@@ -1,9 +1,10 @@
 <section class="py-5" style="background-color: #f2f2f2">
   <div class="container text-center" style="max-width: 1440px">
-    <h2 class="font-weight-bold text-dark mb-4">Bank Accounts We Work With</h2>
+    <h2 class="font-weight-bold text-dark mb-4">Banks We Work With</h2>
 
     <div id="bankCarousel" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
+        <!-- First slide -->
         <div class="carousel-item active">
           <div class="d-flex justify-content-center">
             <div
@@ -17,7 +18,11 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 1</p>
+              <img
+                src="{{ url_for('static', filename='src/bnp_square.png') }}"
+                alt="Bank 1"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
             <div
               class="mx-2 border border-dark"
@@ -30,7 +35,11 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 2</p>
+              <img
+                src="{{ url_for('static', filename='src/fintro_square.jpg') }}"
+                alt="Bank 2"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
             <div
               class="mx-2 border border-dark"
@@ -43,7 +52,11 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 3</p>
+              <img
+                src="{{ url_for('static', filename='src/HB_square.png') }}"
+                alt="Bank 3"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
             <div
               class="mx-2 border border-dark"
@@ -56,10 +69,15 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 4</p>
+              <img
+                src="{{ url_for('static', filename='src/ing_sqaure.png') }}"
+                alt="Bank 4"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
           </div>
         </div>
+        <!-- Second slide -->
         <div class="carousel-item">
           <div class="d-flex justify-content-center">
             <div
@@ -73,7 +91,11 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 5</p>
+              <img
+                src="{{ url_for('static', filename='src/pko_square.jpeg') }}"
+                alt="Bank 5"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
             <div
               class="mx-2 border border-dark"
@@ -86,7 +108,11 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 6</p>
+              <img
+                src="{{ url_for('static', filename='src/pekao_square.jpg') }}"
+                alt="Bank 6"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
             <div
               class="mx-2 border border-dark"
@@ -99,7 +125,11 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 7</p>
+              <img
+                src="{{ url_for('static', filename='src/mbank_square.jpg') }}"
+                alt="Bank 7"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
             <div
               class="mx-2 border border-dark"
@@ -112,11 +142,16 @@
                 justify-content: center;
               "
             >
-              <p class="text-muted">Bank 8</p>
+              <img
+                src="{{ url_for('static', filename='src/ca_square.png') }}"
+                alt="Bank 8"
+                style="max-width: 100%; max-height: 100%; object-fit: cover"
+              />
             </div>
           </div>
         </div>
       </div>
+      <!-- Carousel controls -->
       <a
         class="carousel-control-prev"
         href="#bankCarousel"

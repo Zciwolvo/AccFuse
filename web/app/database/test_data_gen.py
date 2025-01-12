@@ -48,11 +48,13 @@ start_date = datetime(2024, 1, 1)
 end_date = datetime(2024, 10, 31)
 
 # Generate transactions for account_id 3 and 4
+transactions_account_1 = generate_transactions(account_id=1, start_date=start_date, end_date=end_date)
+transactions_account_2 = generate_transactions(account_id=2, start_date=start_date, end_date=end_date)
 transactions_account_3 = generate_transactions(account_id=3, start_date=start_date, end_date=end_date)
 transactions_account_4 = generate_transactions(account_id=4, start_date=start_date, end_date=end_date)
 
 # Combine transactions
-all_transactions = transactions_account_3 + transactions_account_4
+all_transactions = transactions_account_1 + transactions_account_2 + transactions_account_3 + transactions_account_4
 
 # Convert to DataFrame
 df_transactions = pd.DataFrame(all_transactions)

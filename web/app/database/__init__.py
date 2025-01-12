@@ -6,10 +6,15 @@ from flask_migrate import Migrate
 database = SQLAlchemy()
 migrate = Migrate()
 
-def init_app(app):
+def init_app(app, test=False):
     # Database configuration
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@localhost:3306/AccFuse'
+    
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    if test:
+        app.config["TESTING"] = True
+        app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@localhost:3306/AccFuse'
 
     # Initialize SQLAlchemy and Migrate with app
     database.init_app(app)

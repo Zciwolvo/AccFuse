@@ -9,7 +9,7 @@ jwt = JWTManager()
 cors = CORS()
 
 
-def create_app():
+def create_app(test=False):
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your_secret_key'
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -29,6 +29,10 @@ def create_app():
     app.config['JWT_ACCESS_COOKIE_NAME'] = "token"
     
     app.config['RECAPTCHA_KEY'] = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+    
+    if test:
+        app.config["MAIL_SUPPRESS_SEND"] = True
+        app.config["JWT_COOKIE_SECURE"] = False
     
     # Register blueprints
     from .home import home as home_blueprint
@@ -50,7 +54,7 @@ def create_app():
     app.register_blueprint(help_page_blueprint)
     
     from .database import init_app
-    init_app(app)
+    init_app(app, test)
     
     # Initialize extensions
     mail.init_app(app)
