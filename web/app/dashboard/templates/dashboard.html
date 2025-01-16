@@ -27,15 +27,17 @@
       {% else %}
       <h2 class="mb-4">Welcome to your Dashboard</h2>
 
-      <!-- Bank Overview Section -->
       {% include 'overview.html' %}
 
-      <!-- Analytics Section -->
-      {% include 'analytics.html' %} {% include 'performance.html' %} {% include
-      'predictions.html' %}
+      {% include 'analytics.html' %} 
+      
+      {% include 'performance.html' %} 
 
-      <!-- Transaction Table -->
-      {% include 'transactions.html' %} {% endif %}
+      {% include 'predictions.html' %}
+      
+      {% include 'transactions.html' %} 
+      
+      {% endif %}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -43,5 +45,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-  </body>
+    
 </html>

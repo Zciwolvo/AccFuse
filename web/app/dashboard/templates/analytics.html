@@ -20,6 +20,7 @@
     document.addEventListener("DOMContentLoaded", function () {
     // Bar Chart: Incomes and Outcomes
     const barCtx = document.getElementById('barChart').getContext('2d');
+    console.log({{incomes | safe}})
     new Chart(barCtx, {
       type: 'bar',
       data: {

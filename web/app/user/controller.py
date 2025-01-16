@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_jwt_extended import create_access_token, set_access_cookies
 from datetime import datetime, timedelta
+import re
 import requests
 import jwt
 from flask_mail import Message
@@ -26,7 +27,13 @@ def confirm_verification_token(token, expiration=3600):
 @user.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    hashed_password = generate_password_hash(data['password'], method='pbkdf2:sha256')
+    
+    # Password validation
+    password = data.get('password', '')
+    if not re.fullmatch(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', password):
+        return jsonify({'message': 'Password must have at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long.'}), 400
+
+    hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
     new_user = User(username=data['username'], email=data['email'], password=hashed_password)
     
     db.session.add(new_user)

@@ -15,17 +15,13 @@ from collections import defaultdict
 def index():
     user_id = get_jwt_identity()
     user_accounts = get_user_accounts(user_id)
-
-    # Filter out inactive accounts
     active_accounts = [account for account in user_accounts if account.active]
 
     # Get year filter
     selected_year = request.args.get('selected_year', type=int, default=datetime.now().year)
     available_years = get_available_years(active_accounts)
-
     # Parse transaction filters from the request
     filters = parse_filters(request)
-
     # Convert date strings to actual date objects
     if filters['start_date']:
         filters['start_date'] = datetime.strptime(filters['start_date'], '%Y-%m-%d')
@@ -34,7 +30,7 @@ def index():
 
     # Get filtered transactions
     all_transactions = get_filtered_transactions(active_accounts, filters)
-    transactions = get_yearly_transactions(active_accounts, selected_year)
+    transactions = get_yearly_transactions(active_accounts, selected_year-1)
 
     # Prepare month-by-month analytics (combined and account-specific)
     (
@@ -174,7 +170,6 @@ def calculate_bar_chart_data(user_accounts, transactions):
     global_incomes = 0
     global_outcomes = 0
     account_bar_data = []
-
     for account in user_accounts:
         account_transactions = [t for t in transactions if t.account_id == account.account_id]
         total_income = sum(float(t.amount) for t in account_transactions if t.credit_debit_indicator == 'CRDT')
@@ -182,7 +177,6 @@ def calculate_bar_chart_data(user_accounts, transactions):
 
         global_incomes += total_income
         global_outcomes += total_outcome
-
         account_bar_data.append({
             "account_name": account.name,
             "income": total_income,
@@ -198,7 +192,6 @@ def calculate_bar_chart_data(user_accounts, transactions):
     bar_labels.extend(account["account_name"] for account in account_bar_data)
     incomes.extend(account["income"] for account in account_bar_data)
     outcomes.extend(account["outcome"] for account in account_bar_data)
-
     return incomes, outcomes, bar_labels, account_bar_data
 
 def calculate_pie_chart_data(user_accounts):
@@ -221,10 +214,11 @@ def get_available_years(user_accounts):
     return sorted([year.year for year in transaction_years])
 
 def get_yearly_transactions(user_accounts, year):
-    return Transaction.query.filter(
+    transactions = Transaction.query.filter(
         Transaction.account_id.in_([a.account_id for a in user_accounts]),
         func.year(Transaction.booking_date) == year
     ).all()
+    return transactions
     
     
 def calculate_monthly_analytics(transactions, current_users):
